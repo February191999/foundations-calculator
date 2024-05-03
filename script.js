@@ -9,3 +9,8 @@ function subtractNumbers(firstNum, secondNum) {
 function multiplyNumber(firstNum, secondNum) {
     return firstNum * secondNum;
 }
+
+function divideNumber(firstNum, secondNum) {
+    return firstNum / secondNum;
+}
+
