@@ -1,0 +1,8 @@
+body {
+    display: flex;
+
+}
+
+.main-calc-div {
+    background-color: darkgray;
+}
