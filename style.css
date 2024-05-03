@@ -13,4 +13,20 @@ body {
     min-width: 470px;
     min-height: 670px;
     border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.display-div {
+    background-color: aliceblue;
+    width: 80%;
+    height: 20%;
+}
+
+.button-div {
+    background-color: rgb(32, 172, 172);
+    width: 80%;
+    height: 70%;
 }
