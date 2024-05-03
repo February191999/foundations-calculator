@@ -1,8 +1,12 @@
 body {
     display: flex;
-
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
 }
 
 .main-calc-div {
-    background-color: darkgray;
+    background-color: rgb(240, 5, 5);
+    width: 25%;
+    height: 80%;
 }
