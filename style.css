@@ -35,6 +35,7 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
+    gap: 5%;
 }
 
 .button {
@@ -45,4 +46,9 @@ body {
 .row {
     display: flex;
     flex: auto;
+    gap: 5%;
+}
+
+.del, .zero {
+    flex: 3;
 }
