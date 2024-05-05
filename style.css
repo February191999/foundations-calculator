@@ -21,19 +21,21 @@ body {
 
 .display-div {
     background-color: aliceblue;
-    width: 85%;
+    width: 90%;
     height: 20%;
+    border-radius: 20px 20px 0 0;
 }
 
 .button-div {
     background-color: aliceblue;
-    width: 75%;
+    width: 80%;
     height: 70%;
     overflow: hidden;
     padding: 2% 5%;
     display: flex;
     justify-content: center;
     gap: 2%;
+    border-radius: 0 0 20px 20px;
 }
 
 .buttons {
@@ -46,9 +48,9 @@ body {
 }
 
 .button {
-    /* border-radius: 70%; */
+    border-radius: 70%;
     flex: auto;
-    border: 5px solid black;
+    border: 3px solid black;
     font-size: x-large;
     font-weight: bold;
 }
@@ -56,10 +58,10 @@ body {
 .row {
     display: flex;
     flex: auto;
-    gap: 2%;
+    gap: 3%;
 }
 
-.zero {
+.zero, .operate{
     flex: 2;
     border-radius: 40px;
 }
@@ -78,7 +80,7 @@ body {
 .bottom-two-rows {
     display: flex;
     flex: 4;
-    gap: 2%;
+    gap: 1%;
 }
 
 .fourth-row {
@@ -93,9 +95,26 @@ body {
     max-width: 31%;
 }
 
+.operate {
+    max-width: 97%;
+    margin-left: 4%;
+}
+
 .horizontal-buttons {
     display: flex;
     flex: 3;
     gap: 7%;
     flex-direction: column;
+}
+
+.clear {
+    background-color: rgb(206, 35, 5);
+}
+
+.del {
+    background-color: orange;
+}
+
+.operator, .operate {
+    background-color: palevioletred;
 }
