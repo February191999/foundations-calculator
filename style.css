@@ -50,7 +50,7 @@ body {
 .button {
     border-radius: 70%;
     flex: auto;
-    border: 3px solid black;
+    border: 3px solid rgb(255, 255, 255);
     font-size: x-large;
     font-weight: bold;
 }
@@ -97,7 +97,7 @@ body {
 
 .operate {
     max-width: 97%;
-    margin-left: 4%;
+    margin-left: 6%;
 }
 
 .horizontal-buttons {
@@ -109,12 +109,15 @@ body {
 
 .clear {
     background-color: rgb(206, 35, 5);
+    color: white;
 }
 
 .del {
     background-color: orange;
+    color: white;
 }
 
 .operator, .operate {
-    background-color: palevioletred;
+    background-color: rgb(184, 178, 180);
+    color: white;
 }
