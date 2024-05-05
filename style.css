@@ -32,6 +32,8 @@ body {
     overflow: hidden;
     padding: 2% 5%;
     display: flex;
+    justify-content: center;
+    gap: 2%;
 }
 
 .buttons {
@@ -40,12 +42,15 @@ body {
     flex-direction: column;
     gap: 3%;
     overflow: hidden;
+    flex: 3;
 }
 
 .button {
     /* border-radius: 70%; */
     flex: auto;
     border: 5px solid black;
+    font-size: x-large;
+    font-weight: bold;
 }
 
 .row {
@@ -54,9 +59,15 @@ body {
     gap: 2%;
 }
 
-.del, .zero {
+.operate, .zero {
     flex: 2;
     border-radius: 40px;
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .clear, .operator, .number {
