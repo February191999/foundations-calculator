@@ -21,34 +21,48 @@ body {
 
 .display-div {
     background-color: aliceblue;
-    width: 80%;
+    width: 85%;
     height: 20%;
 }
 
 .button-div {
-    background-color: rgb(32, 172, 172);
-    width: 80%;
+    background-color: aliceblue;
+    width: 75%;
     height: 70%;
+    overflow: hidden;
+    padding: 2% 5%;
+    display: flex;
 }
 
 .buttons {
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 5%;
+    gap: 3%;
+    overflow: hidden;
 }
 
 .button {
-    border-radius: 70%;
+    /* border-radius: 70%; */
     flex: auto;
+    border: 5px solid black;
 }
 
 .row {
     display: flex;
     flex: auto;
-    gap: 5%;
+    gap: 2%;
 }
 
 .del, .zero {
-    flex: 3;
+    flex: 2;
+    border-radius: 40px;
+}
+
+.clear, .operator, .number {
+    flex: 1;
+}
+
+.decimal, .operate {
+    flex: 1;
 }
