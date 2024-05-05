@@ -59,7 +59,7 @@ body {
     gap: 2%;
 }
 
-.operate, .zero {
+.zero {
     flex: 2;
     border-radius: 40px;
 }
@@ -68,12 +68,34 @@ body {
     display: flex;
     flex-direction: column;
     flex: 1;
+    gap: 5%;
 }
 
-.clear, .operator, .number {
+.clear, .operate, .operator, .number, .decimal, .del {
     flex: 1;
 }
 
-.decimal, .operate {
-    flex: 1;
+.bottom-two-rows {
+    display: flex;
+    flex: 4;
+    gap: 2%;
+}
+
+.fourth-row {
+    gap: 3%;
+}
+
+.fifth-row  {
+    gap: 3%;
+}
+
+.decimal {
+    max-width: 31%;
+}
+
+.horizontal-buttons {
+    display: flex;
+    flex: 3;
+    gap: 7%;
+    flex-direction: column;
 }
