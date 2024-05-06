@@ -1,9 +1,20 @@
 body {
-    display: flex;
     height: 100vh;
+    background-color: darkslateblue;
+}
+
+body, .main-calc-div, .button-div, .buttons, .row, .right-column, .bottom-two-rows, .horizontal-buttons {
+    display: flex;
+}
+
+body, .main-calc-div {
     justify-content: center;
     align-items: center;
-    background-color: darkslateblue;
+}
+
+.main-calc-div, .buttons, .right-column, .horizontal-buttons {
+    flex-direction: column;
+
 }
 
 .main-calc-div {
@@ -13,10 +24,6 @@ body {
     min-width: 470px;
     min-height: 670px;
     border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .display-div {
@@ -30,35 +37,34 @@ body {
     background-color: aliceblue;
     width: 80%;
     height: 70%;
-    overflow: hidden;
     padding: 2% 5%;
-    display: flex;
     justify-content: center;
     gap: 2%;
     border-radius: 0 0 20px 20px;
 }
 
+.buttons, .horizontal-buttons {
+    flex: 3;
+}
+
 .buttons {
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 3%;
     overflow: hidden;
-    flex: 3;
+}
+
+.buttons, .row, .fourth-row, .fifth-row {
+    gap: 3%;
 }
 
 .button {
     border-radius: 70%;
-    flex: auto;
     border: 3px solid rgb(255, 255, 255);
     font-size: x-large;
     font-weight: bold;
 }
 
-.row {
-    display: flex;
+.row, .button {
     flex: auto;
-    gap: 3%;
 }
 
 .zero, .operate{
@@ -67,28 +73,16 @@ body {
 }
 
 .right-column {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
     gap: 5%;
 }
 
-.clear, .operate, .operator, .number, .decimal, .del {
+.clear, .operate, .operator, .number, .decimal, .del, .right-column {
     flex: 1;
 }
 
 .bottom-two-rows {
-    display: flex;
     flex: 4;
     gap: 1%;
-}
-
-.fourth-row {
-    gap: 3%;
-}
-
-.fifth-row  {
-    gap: 3%;
 }
 
 .decimal {
@@ -101,23 +95,21 @@ body {
 }
 
 .horizontal-buttons {
-    display: flex;
-    flex: 3;
     gap: 7%;
-    flex-direction: column;
+}
+
+.clear, .del, .operator, .operate {
+    color: white;
 }
 
 .clear {
     background-color: rgb(206, 35, 5);
-    color: white;
 }
 
 .del {
     background-color: orange;
-    color: white;
 }
 
 .operator, .operate {
     background-color: rgb(184, 178, 180);
-    color: white;
 }
