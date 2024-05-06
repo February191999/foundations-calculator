@@ -17,6 +17,17 @@ function divideNumbers(firstNum, secondNum) {
 let firstNumber;
 let secondNumber;
 let operator;
+let displayValue;
+
+const numbers = document.querySelector(".number");
+const displayDiv = document.querySelector(".display-div");
+const displayPara = document.createElement("p");
+
+numbers.addEventListener("click", () => {
+    alert(numbers.value);
+})
+
+
 
 function operate(firstNum, secondNum, operator) {
     switch (operator) {
