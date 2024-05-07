@@ -113,3 +113,15 @@ body, .main-calc-div {
 .operator, .operate {
     background-color: rgb(184, 178, 180);
 }
+
+.button:hover {
+    background-color: rgb(197, 197, 197);
+    border: 3px solid grey;
+    color: white;
+}
+
+.clear:hover {
+    background-color: rgb(255, 118, 94);
+    color: black;
+    border: 3px solid rgb(100, 80, 80);
+}
