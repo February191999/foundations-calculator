@@ -4,6 +4,7 @@ const displayDiv = document.querySelector(".display-div");
 const displayPara = document.createElement("p");
 const clear = document.querySelector(".clear");
 const del = document.querySelector(".del");
+const decimal = document.querySelector(".decimal");
 
 function addNumbers(firstNum, secondNum) {
     return firstNum + secondNum;
@@ -32,7 +33,7 @@ let displayValue = "";
 
 numbers.forEach(num => num.addEventListener("click", () => {
 
-    displayValue += num.value;
+    displayValue += num.value; 
 
     displayPara.textContent = displayValue;
 
@@ -44,12 +45,28 @@ clear.addEventListener("click", () => {
     displayDiv.removeChild(displayPara); 
 })
 
-function storeInFirst() {
-    if (operator !== undefined) {
-        firstNumber = displayValue;
-    }
-}
+// function storeInFirst() {
+//     if (operator !== undefined) {
+//         firstNumber = displayValue;
+//     }
+// }
 
+decimal.addEventListener("click", () => {
+    
+    splitDisplayValue = displayValue.split("");
+    checkDecimal = splitDisplayValue.find(".")
+
+    if (checkDecimal === undefined) {
+        decimal.ariaDisabled = "false";
+        console.log(decimal.ariaDisabled)
+        displayValue += decimal.value;
+        displayPara.textContent = displayValue;
+
+        displayDiv.appendChild(displayPara);
+    } else {
+        decimal.ariaDisabled = "true";
+    }
+})
 
 function operate(firstNum, secondNum, operator) {
     switch (operator) {
