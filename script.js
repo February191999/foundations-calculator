@@ -27,9 +27,9 @@ let secondNumber = "";
 let operator;
 let displayValue = "";
 
-// buttons.forEach(button => button.addEventListener("click", () => {
-//     button.setAttribute("style", "opacity: 0.6; transition: 0.3s;")
-// }))
+buttons.forEach(button => button.addEventListener("click", () => {
+    button.setAttribute("style", "opacity: 0.6; transition: 0.3s; transform-origin: center;")
+}))
 
 numbers.forEach(num => num.addEventListener("click", () => {
 
@@ -82,7 +82,7 @@ del.addEventListener("click", () => {
 
 function operate(firstNum, secondNum, operator) {
     switch (operator) {
-        case ("add"): 
+        case (operator === "add"): 
             addNumbers(firstNum, secondNum);
             break;
         case ("subtract"):
