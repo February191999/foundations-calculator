@@ -33,7 +33,7 @@ let displayValue = "";
 
 numbers.forEach(num => num.addEventListener("click", () => {
 
-    displayValue += num.value; 
+    displayValue += num.value; //Add num value to displayValue for each click on buttons with number class
 
     displayPara.textContent = displayValue;
 
@@ -45,26 +45,27 @@ clear.addEventListener("click", () => {
     displayDiv.removeChild(displayPara); 
 })
 
-// function storeInFirst() {
-//     if (operator !== undefined) {
-//         firstNumber = displayValue;
-//     }
-// }
+function isDecimal(item) {
+    if (item === ".") { //Check if item is period
+        return true;
+    }
+}
+
 
 decimal.addEventListener("click", () => {
     
-    splitDisplayValue = displayValue.split("");
-    checkDecimal = splitDisplayValue.find(".")
+    let splitDisplayValue = displayValue.split(""); //Split string into array
+    let checkDecimal = splitDisplayValue.find(isDecimal); //Check if array has a period
 
-    if (checkDecimal === undefined) {
-        decimal.ariaDisabled = "false";
+    if (checkDecimal === undefined) { //If checkDecimal returns undefined, decimal button works
+        decimal.ariaDisabled = "false"; 
         console.log(decimal.ariaDisabled)
         displayValue += decimal.value;
         displayPara.textContent = displayValue;
 
         displayDiv.appendChild(displayPara);
-    } else {
-        decimal.ariaDisabled = "true";
+    } else if (checkDecimal === true) {
+        decimal.ariaDisabled = "true"; //Disable decimal button if checkDecimal finds a period
     }
 })
 
