@@ -69,6 +69,17 @@ decimal.addEventListener("click", () => {
     }
 })
 
+del.addEventListener("click", () => {
+    let splitDisplayValue = displayValue.split(""); //Split string into array
+    splitDisplayValue.splice(-1, 1); //Delete last item
+
+    let newString = splitDisplayValue.join(""); 
+
+    displayValue = newString;
+    displayPara.textContent = displayValue;
+    displayDiv.appendChild(displayPara);
+})
+
 function operate(firstNum, secondNum, operator) {
     switch (operator) {
         case ("add"): 
