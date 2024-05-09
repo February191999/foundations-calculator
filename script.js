@@ -5,6 +5,11 @@ const displayPara = document.createElement("p");
 const clear = document.querySelector(".clear");
 const del = document.querySelector(".del");
 const decimal = document.querySelector(".decimal");
+const buttonTag = document.querySelectorAll("button");
+
+displayDiv.setAttribute("style", "display: flex; justify-content: flex-end; align-items: flex-end; text-wrap: pretty; text-wrap: balance;")
+
+displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; text-wrap: balance;")
 
 function addNumbers(firstNum, secondNum) {
     return firstNum + secondNum;
@@ -26,10 +31,6 @@ let firstNumber = "";
 let secondNumber = "";
 let operator;
 let displayValue = "";
-
-buttons.forEach(button => button.addEventListener("click", () => {
-    button.setAttribute("style", "opacity: 0.6; transition: 0.3s; transform-origin: center;")
-}))
 
 numbers.forEach(num => num.addEventListener("click", () => {
 
