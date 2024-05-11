@@ -36,12 +36,24 @@ numbers.forEach(num => num.addEventListener("click", () => {
 
     displayValue += num.value; //Add num value to displayValue for each click on buttons with number class
 
-    displayPara.textContent = displayValue;
+    let splitDisplayValue = displayValue.split(""); //Split string into array
+    let checkIfOverTen = isOverTen(splitDisplayValue); //Check if array length is over ten
+    
+    if (checkIfOverTen === true) {
+        numbers.ariaDisabled = "true";
+        console.log(numbers.ariaDisabled);
+    } else {
+        displayPara.textContent = addComma(displayValue);
 
-    console.log(addComma(displayValue));
-
-    displayDiv.appendChild(displayPara);
+        displayDiv.appendChild(displayPara);
+    }
 }))
+
+function isOverTen(array) {
+    if (array.length >= 10) {
+        return true;
+    }
+}
 
 clear.addEventListener("click", () => {
     displayValue = ""; //Resets displayValue
@@ -62,7 +74,7 @@ decimal.addEventListener("click", () => {
     if (checkDecimal === undefined) { //If checkDecimal returns undefined, decimal button works
         decimal.ariaDisabled = "false"; 
         console.log(decimal.ariaDisabled)
-        displayValue += decimal.value;
+        displayValue += decimal.value; //Adds decimal to displayValue
         displayPara.textContent = displayValue;
 
         displayDiv.appendChild(displayPara);
