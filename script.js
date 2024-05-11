@@ -7,9 +7,9 @@ const del = document.querySelector(".del");
 const decimal = document.querySelector(".decimal");
 const buttonTag = document.querySelectorAll("button");
 
-displayDiv.setAttribute("style", "display: flex; justify-content: flex-end; align-items: flex-end; text-wrap: pretty; text-wrap: balance;")
+displayDiv.setAttribute("style", "display: flex; justify-content: flex-end; align-items: flex-end;");
 
-displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; text-wrap: balance;")
+displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; max-width: 100%")
 
 function addNumbers(firstNum, secondNum) {
     return firstNum + secondNum;
@@ -38,6 +38,8 @@ numbers.forEach(num => num.addEventListener("click", () => {
 
     displayPara.textContent = displayValue;
 
+    console.log(addComma(displayValue));
+
     displayDiv.appendChild(displayPara);
 }))
 
@@ -51,7 +53,6 @@ function isDecimal(item) {
         return true;
     }
 }
-
 
 decimal.addEventListener("click", () => {
     
@@ -80,6 +81,29 @@ del.addEventListener("click", () => {
     displayPara.textContent = displayValue;
     displayDiv.appendChild(displayPara);
 })
+
+function addComma(text) {
+    let array = text.split("");
+    let newArray = [];
+    let newStringArray = [];
+    array.map((char) => {
+        newArray.unshift(char);
+    }); 
+
+    for (let i = 0; i < newArray.length; i++) { 
+        if (i % 3 === 0 && i !== 0) {
+            newArray[i] += ",";
+        } 
+    }
+
+    newArray.map((char) => {
+        newStringArray.unshift(char);
+    });
+
+    let newString = newStringArray.join("");
+
+    return newString;
+}
 
 function operate(firstNum, secondNum, operator) {
     switch (operator) {
