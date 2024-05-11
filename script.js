@@ -39,7 +39,7 @@ numbers.forEach(num => num.addEventListener("click", () => {
     let splitDisplayValue = displayValue.split(""); //Split string into array
     let checkIfOverTen = isOverTen(splitDisplayValue); //Check if array length is over ten
     
-    if (checkIfOverTen === true) {
+    if (checkIfOverTen === true) { //Disable numbers buttons if over ten digits
         numbers.ariaDisabled = "true";
         console.log(numbers.ariaDisabled);
     } else {
@@ -50,7 +50,12 @@ numbers.forEach(num => num.addEventListener("click", () => {
 }))
 
 function isOverTen(array) {
-    if (array.length >= 10) {
+
+    let numString = "0123456789";
+
+    let filteredArray = array.filter(num => numString.includes(num)); //Check if array item is in string to count only numbers
+
+    if (filteredArray.length >= 10) {
         return true;
     }
 }
