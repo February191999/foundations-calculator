@@ -5,7 +5,7 @@ const displayPara = document.createElement("p");
 const clear = document.querySelector(".clear");
 const del = document.querySelector(".del");
 const decimal = document.querySelector(".decimal");
-const operate = document.querySelector(".operate");
+const operateButton = document.querySelector(".operate");
 
 displayDiv.setAttribute("style", "display: flex; justify-content: flex-end; align-items: flex-end;");
 
@@ -29,7 +29,7 @@ function divideNumbers(firstNum, secondNum) {
 
 let firstNumber = "";
 let secondNumber = "";
-let operator;
+let operator = "";
 let displayValue = "";
 
 operatorButtons.forEach(button => button.addEventListener("click", () => {
@@ -55,7 +55,16 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
     }
 }))
 
+operateButton.addEventListener("click", () => {
+    
+    secondNumber = Number(displayValue); //Store displayValue in secondNumber 
+    displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
+    displayValue = operate(firstNumber, secondNumber, operator);
 
+    displayPara.textContent = addComma(displayValue.toString());
+    displayDiv.appendChild(displayPara);
+
+})
 
 numbers.forEach(num => num.addEventListener("click", () => {
 
@@ -89,6 +98,9 @@ function isOverTen(array) {
 
 clear.addEventListener("click", () => {
     displayValue = ""; //Resets displayValue
+    firstNumber = "";
+    secondNumber = "";
+    operator = "";
     displayDiv.removeChild(displayPara); 
 })
 
@@ -169,17 +181,13 @@ function addComma(text) {
 
 function operate(firstNum, secondNum, operator) {
     switch (operator) {
-        case (operator === "add"): 
-            addNumbers(firstNum, secondNum);
-            break;
+        case ("add"): 
+            return addNumbers(firstNum, secondNum);
         case ("subtract"):
-            subtractNumbers(firstNum, secondNum);
-            break;
+            return subtractNumbers(firstNum, secondNum);
         case ("multiply"):
-            multiplyNumbers(firstNum, secondNum);
-            break;
+            return multiplyNumbers(firstNum, secondNum);
         case ("divide"):
-            divideNumbers(firstNum, secondNum);
-            break;
+            return divideNumbers(firstNum, secondNum);
     }   
 }
