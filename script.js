@@ -9,7 +9,7 @@ const buttonTag = document.querySelectorAll("button");
 
 displayDiv.setAttribute("style", "display: flex; justify-content: flex-end; align-items: flex-end;");
 
-displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; max-width: 100%")
+displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; max-width: 100%; padding-right: 10px;")
 
 function addNumbers(firstNum, secondNum) {
     return firstNum + secondNum;
@@ -41,8 +41,7 @@ numbers.forEach(num => num.addEventListener("click", () => {
     
     if (checkIfOverTen === true) { //Disable numbers buttons if over ten digits
         numbers.ariaDisabled = "true";
-        console.log(numbers.ariaDisabled);
-    } else if (splitDisplayValue.includes(",") === true) {
+    } else if (splitDisplayValue.includes(",") === true) { //
         displayPara.textContent = displayValue;
         displayDiv.appendChild(displayPara);
     } else {
@@ -95,36 +94,49 @@ decimal.addEventListener("click", () => {
 })
 
 del.addEventListener("click", () => {
+    console.log(displayValue);
+
     let splitDisplayValue = displayValue.split(""); //Split string into array
-    splitDisplayValue.splice(-1, 1); //Delete last item
+
+    const arrayLength = splitDisplayValue.length;
+    let checkIfOverTen = isOverTen(splitDisplayValue);
+
+    console.log(checkIfOverTen);
+    console.log(arrayLength);
+
+    if (checkIfOverTen === true) {
+        splitDisplayValue.splice(8); //Delete any item after index eight if array length is more than 10
+        console.log(splitDisplayValue);
+    } else {
+        splitDisplayValue.splice(-1, 1); //Delete last item
+    }
 
     let newString = splitDisplayValue.join(""); 
 
     displayValue = newString;
-    displayPara.textContent = displayValue;
+    displayPara.textContent = addComma(displayValue);
     displayDiv.appendChild(displayPara);
 })
 
 function addComma(text) {
-    let array = text.split("");
-    let newArray = [];
+    let array = text.split(""); //Split text into array
+    let newArray = []; 
     let newStringArray = [];
-    array.map((char) => {
+    array.map((char) => { //Unshift characters from array into newArray
         newArray.unshift(char);
     }); 
 
-    for (let i = 0; i < newArray.length; i++) { 
-        if (i % 3 === 0 && i !== 0) {
-            newArray[i] += ",";
-            console.log(newArray);
+    for (let i = 0; i < newArray.length; i++) {   
+        if (i % 3 === 0 && i !== 0) { 
+            newArray[i] += ","; //Add comma to newArray if i is divisible by 3 and isn't 0
         } 
     }
 
-    newArray.map((char) => {
+    newArray.map((char) => { //Unshift characters into newStringArray to get correct order of numbers
         newStringArray.unshift(char);
     });
 
-    let newString = newStringArray.join("");
+    let newString = newStringArray.join(""); 
 
     return newString;
 }
