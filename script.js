@@ -1,5 +1,5 @@
 const numbers = document.querySelectorAll(".number");
-const buttons = document.querySelectorAll(".button");
+// const buttons = document.querySelectorAll(".button");
 const displayDiv = document.querySelector(".display-div");
 const displayPara = document.createElement("p");
 const clear = document.querySelector(".clear");
@@ -41,7 +41,7 @@ numbers.forEach(num => num.addEventListener("click", () => {
     
     if (checkIfOverTen === true) { //Disable numbers buttons if over ten digits
         numbers.ariaDisabled = "true";
-    } else if (splitDisplayValue.includes(",") === true) { //
+    } else if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
         displayPara.textContent = displayValue;
         displayDiv.appendChild(displayPara);
     } else {
@@ -97,12 +97,7 @@ del.addEventListener("click", () => {
     console.log(displayValue);
 
     let splitDisplayValue = displayValue.split(""); //Split string into array
-
-    const arrayLength = splitDisplayValue.length;
     let checkIfOverTen = isOverTen(splitDisplayValue);
-
-    console.log(checkIfOverTen);
-    console.log(arrayLength);
 
     if (checkIfOverTen === true) {
         splitDisplayValue.splice(8); //Delete any item after index eight if array length is more than 10
@@ -112,10 +107,16 @@ del.addEventListener("click", () => {
     }
 
     let newString = splitDisplayValue.join(""); 
-
     displayValue = newString;
-    displayPara.textContent = addComma(displayValue);
-    displayDiv.appendChild(displayPara);
+
+    if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
+        displayPara.textContent = displayValue;
+        displayDiv.appendChild(displayPara);
+    } else {
+        displayPara.textContent = addComma(displayValue);
+
+        displayDiv.appendChild(displayPara);
+    }
 })
 
 function addComma(text) {
