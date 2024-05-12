@@ -42,6 +42,9 @@ numbers.forEach(num => num.addEventListener("click", () => {
     if (checkIfOverTen === true) { //Disable numbers buttons if over ten digits
         numbers.ariaDisabled = "true";
         console.log(numbers.ariaDisabled);
+    } else if (splitDisplayValue.includes(",") === true) {
+        displayPara.textContent = displayValue;
+        displayDiv.appendChild(displayPara);
     } else {
         displayPara.textContent = addComma(displayValue);
 
@@ -79,8 +82,11 @@ decimal.addEventListener("click", () => {
     if (checkDecimal === undefined) { //If checkDecimal returns undefined, decimal button works
         decimal.ariaDisabled = "false"; 
         console.log(decimal.ariaDisabled)
-        displayValue += decimal.value; //Adds decimal to displayValue
-        displayPara.textContent = addComma(displayValue);
+        let displayValueWithComma = addComma(displayValue);
+
+        displayValue = displayValueWithComma + decimal.value; //Adds decimal to displayValue
+
+        displayPara.textContent = displayValue;
 
         displayDiv.appendChild(displayPara);
     } else if (checkDecimal === true) {
@@ -110,6 +116,7 @@ function addComma(text) {
     for (let i = 0; i < newArray.length; i++) { 
         if (i % 3 === 0 && i !== 0) {
             newArray[i] += ",";
+            console.log(newArray);
         } 
     }
 
