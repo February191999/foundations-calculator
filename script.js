@@ -1,11 +1,10 @@
 const numbers = document.querySelectorAll(".number");
-// const buttons = document.querySelectorAll(".button");
+const operatorButtons = document.querySelectorAll(".operator");
 const displayDiv = document.querySelector(".display-div");
 const displayPara = document.createElement("p");
 const clear = document.querySelector(".clear");
 const del = document.querySelector(".del");
 const decimal = document.querySelector(".decimal");
-const buttonTag = document.querySelectorAll("button");
 
 displayDiv.setAttribute("style", "display: flex; justify-content: flex-end; align-items: flex-end;");
 
@@ -31,6 +30,31 @@ let firstNumber = "";
 let secondNumber = "";
 let operator;
 let displayValue = "";
+
+operatorButtons.forEach(button => button.addEventListener("click", () => {
+    
+    if (firstNumber !== "") {
+        secondNumber = Number(displayValue);//Store displayValue in secondNumber and change value type to number if firstNumber variable isn't empty
+        console.log(secondNumber);
+        console.log(firstNumber);
+        console.log(`Second num is ${secondNumber}`);
+        displayValue = ""; //Reset displayValue
+        displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
+        operator = button.value;
+        console.log(operator);
+    } else {
+        firstNumber = Number(displayValue); //Store displayValue in firstNumber and change value type to number 
+        console.log(firstNumber);
+        console.log(typeof(firstNumber));
+        displayValue = ""; //Reset displayValue
+        console.log(displayValue);
+        displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
+        operator = button.value;
+        console.log(operator);
+    }
+}))
+
+
 
 numbers.forEach(num => num.addEventListener("click", () => {
 
