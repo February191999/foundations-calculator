@@ -5,6 +5,7 @@ const displayPara = document.createElement("p");
 const clear = document.querySelector(".clear");
 const del = document.querySelector(".del");
 const decimal = document.querySelector(".decimal");
+const operate = document.querySelector(".operate");
 
 displayDiv.setAttribute("style", "display: flex; justify-content: flex-end; align-items: flex-end;");
 
