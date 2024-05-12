@@ -80,7 +80,7 @@ decimal.addEventListener("click", () => {
         decimal.ariaDisabled = "false"; 
         console.log(decimal.ariaDisabled)
         displayValue += decimal.value; //Adds decimal to displayValue
-        displayPara.textContent = displayValue;
+        displayPara.textContent = addComma(displayValue);
 
         displayDiv.appendChild(displayPara);
     } else if (checkDecimal === true) {
