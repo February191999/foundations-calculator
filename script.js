@@ -66,27 +66,7 @@ operateButton.addEventListener("click", () => {
 
     let displayValueToString = displayValue.toString();
     console.log(displayValueToString);
-    // let splitDisplayValue = displayValueToString.split(""); //Split string into array
-
-    // if (splitDisplayValue.includes("-") === true &&          splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if displayValue contains both - and ,
-    //     displayPara.textContent = displayValue;
-    //     displayDiv.appendChild(displayPara);
-    // } else if (splitDisplayValue.includes("-") === true &&  splitDisplayValue.length === 4) { //Return displayValue if displayValue is three digits with a negative value
-    //     displayPara.textContent = displayValue;
-    //     displayDiv.appendChild(displayPara);
-    // } else if (splitDisplayValue.includes("-") === true &&  splitDisplayValue.includes(",") !== true) { //Returns displayValue with addComma if value is negative but doesn't include comma
-    //     displayValue = displayValueToString;
-    //     displayPara.textContent = addComma(displayValue);
-    //     displayDiv.appendChild(displayPara);
-    // } else if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
-    //     displayPara.textContent = displayValue;
-    //     displayDiv.appendChild(displayPara);
-    // } else {
-    //     displayValue = displayValueToString;
-    //     displayPara.textContent = addComma(displayValue);
-    //     displayDiv.appendChild(displayPara);
-    // }
-
+   
     displayValue = displayValueToString;
     displayPara.textContent = addComma(displayValue);
     displayDiv.appendChild(displayPara);
@@ -174,14 +154,6 @@ del.addEventListener("click", () => {
     let newString = splitDisplayValue.join(""); 
     displayValue = newString;
 
-    // if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
-    //     displayPara.textContent = displayValue;
-    //     displayDiv.appendChild(displayPara);
-    // } else {
-    //     displayPara.textContent = addComma(displayValue);
-
-    //     displayDiv.appendChild(displayPara);
-    // }
     displayPara.textContent = addComma(displayValue);
 
     displayDiv.appendChild(displayPara);
