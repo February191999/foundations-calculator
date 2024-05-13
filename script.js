@@ -33,11 +33,10 @@ let operator = "";
 let displayValue = "";
 
 operatorButtons.forEach(button => button.addEventListener("click", () => {
-    
+
     if (firstNumber !== "") {
         secondNumber = Number(displayValue);//Store displayValue in secondNumber and change value type to number if firstNumber variable isn't empty
-        console.log(secondNumber);
-        console.log(firstNumber);
+        console.log(`first num is ${firstNumber}`);
         console.log(`Second num is ${secondNumber}`);
         displayValue = ""; //Reset displayValue
         displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
@@ -45,8 +44,8 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
         console.log(operator);
     } else {
         firstNumber = Number(displayValue); //Store displayValue in firstNumber and change value type to number 
-        console.log(firstNumber);
-        console.log(typeof(firstNumber));
+        console.log(`first num is ${firstNumber}`);
+        console.log(`Second num is ${secondNumber}`);
         displayValue = ""; //Reset displayValue
         console.log(displayValue);
         displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
@@ -59,11 +58,38 @@ operateButton.addEventListener("click", () => {
     
     secondNumber = Number(displayValue); //Store displayValue in secondNumber 
     displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
-    displayValue = operate(firstNumber, secondNumber, operator);
+    displayValue = operate(firstNumber, secondNumber, operator); //Store operated value in displayValue
 
-    displayPara.textContent = addComma(displayValue.toString());
+    firstNumber = displayValue; //Store displayValue in firstNumber so users can use previous results in other operations
+
+    secondNumber = ""; //Reset secondNumber value to take in new number in anticipation of another operation with previous result
+
+    let displayValueToString = displayValue.toString();
+    console.log(displayValueToString);
+    // let splitDisplayValue = displayValueToString.split(""); //Split string into array
+
+    // if (splitDisplayValue.includes("-") === true &&          splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if displayValue contains both - and ,
+    //     displayPara.textContent = displayValue;
+    //     displayDiv.appendChild(displayPara);
+    // } else if (splitDisplayValue.includes("-") === true &&  splitDisplayValue.length === 4) { //Return displayValue if displayValue is three digits with a negative value
+    //     displayPara.textContent = displayValue;
+    //     displayDiv.appendChild(displayPara);
+    // } else if (splitDisplayValue.includes("-") === true &&  splitDisplayValue.includes(",") !== true) { //Returns displayValue with addComma if value is negative but doesn't include comma
+    //     displayValue = displayValueToString;
+    //     displayPara.textContent = addComma(displayValue);
+    //     displayDiv.appendChild(displayPara);
+    // } else if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
+    //     displayPara.textContent = displayValue;
+    //     displayDiv.appendChild(displayPara);
+    // } else {
+    //     displayValue = displayValueToString;
+    //     displayPara.textContent = addComma(displayValue);
+    //     displayDiv.appendChild(displayPara);
+    // }
+
+    displayValue = displayValueToString;
+    displayPara.textContent = addComma(displayValue);
     displayDiv.appendChild(displayPara);
-
 })
 
 numbers.forEach(num => num.addEventListener("click", () => {
@@ -75,10 +101,12 @@ numbers.forEach(num => num.addEventListener("click", () => {
     
     if (checkIfOverTen === true) { //Disable numbers buttons if over ten digits
         numbers.ariaDisabled = "true";
-    } else if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
+    } 
+    else if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
         displayPara.textContent = displayValue;
         displayDiv.appendChild(displayPara);
-    } else {
+    } 
+    else {
         displayPara.textContent = addComma(displayValue);
 
         displayDiv.appendChild(displayPara);
@@ -146,14 +174,17 @@ del.addEventListener("click", () => {
     let newString = splitDisplayValue.join(""); 
     displayValue = newString;
 
-    if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
-        displayPara.textContent = displayValue;
-        displayDiv.appendChild(displayPara);
-    } else {
-        displayPara.textContent = addComma(displayValue);
+    // if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
+    //     displayPara.textContent = displayValue;
+    //     displayDiv.appendChild(displayPara);
+    // } else {
+    //     displayPara.textContent = addComma(displayValue);
 
-        displayDiv.appendChild(displayPara);
-    }
+    //     displayDiv.appendChild(displayPara);
+    // }
+    displayPara.textContent = addComma(displayValue);
+
+    displayDiv.appendChild(displayPara);
 })
 
 function addComma(text) {
@@ -164,9 +195,13 @@ function addComma(text) {
         newArray.unshift(char);
     }); 
 
+    if (array.includes(".") === true) { //Check if array includes decimal and return text if yes
+        return array.join("");
+    }
+
     for (let i = 0; i < newArray.length; i++) {   
-        if (i % 3 === 0 && i !== 0) { 
-            newArray[i] += ","; //Add comma to newArray if i is divisible by 3 and isn't 0
+        if (i % 3 === 0 && i !== 0 && newArray[i] !== "," && newArray[i] !== "." && newArray[i] !== "-") { 
+            newArray[i] += ","; //Add comma to newArray if i is divisible by 3 and isn't 0 and newArray[i] isn't comma, decimal, or negative symbol
         } 
     }
 
