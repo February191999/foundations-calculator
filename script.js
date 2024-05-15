@@ -117,6 +117,7 @@ clear.addEventListener("click", () => {
     secondNumber = "";
     operator = "";
     displayDiv.removeChild(displayPara); 
+    displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; max-width: 100%; padding-right: 10px;") //Reset displayPara style if cleared
 })
 
 function isDecimal(item) {
