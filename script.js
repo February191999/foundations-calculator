@@ -122,8 +122,13 @@ decimal.addEventListener("click", () => {
     
     let splitDisplayValue = displayValue.split(""); //Split string into array
     let checkDecimal = splitDisplayValue.find(isDecimal); //Check if array has a period
+    let checkIfOverTen = isOverTen(splitDisplayValue); //Check if array is over or equal to ten
 
-    if (checkDecimal === undefined) { //If checkDecimal returns undefined, decimal button works
+
+    if (checkIfOverTen === true) { //Disable decimal button if displayValue is equal or over ten digits
+        decimal.ariaDisabled = "true";
+    } else {
+        if (checkDecimal === undefined) { //If checkDecimal returns undefined, decimal button works
         decimal.ariaDisabled = "false"; 
         console.log(decimal.ariaDisabled)
         let displayValueWithComma = addComma(displayValue);
@@ -133,8 +138,9 @@ decimal.addEventListener("click", () => {
         displayPara.textContent = displayValue;
 
         displayDiv.appendChild(displayPara);
-    } else if (checkDecimal === true) {
+        } else if (checkDecimal === true) {
         decimal.ariaDisabled = "true"; //Disable decimal button if checkDecimal finds a period
+        }
     }
 })
 
@@ -172,7 +178,7 @@ function addComma(text) {
         return array.join("");
     }
 
-    if (decimalIndex !== -1) { //Execute code below if no decimal
+    if (decimalIndex !== -1) { //Execute code below if decimal is found
         let wholeNumberPart = array.slice(0, decimalIndex) 
         console.log(wholeNumberPart);
         let decimalNumberPart = array.slice(decimalIndex, (array.length + 1));
@@ -180,7 +186,7 @@ function addComma(text) {
 
         for (let i = 0; i < wholeNumberPart.length; i++) {   
             if (i % 3 === 0 && i !== 0 && wholeNumberPart[i] !== "," && wholeNumberPart[i] !== "-") { 
-                wholeNumberPart[i] += ","; //Add comma to wholeNumberPartt if i is divisible by 3 and isn't 0 and wholeNumberPart[i] isn't comma or negative symbol
+                wholeNumberPart[i] += ","; //Add comma to wholeNumberPart if i is divisible by 3 and isn't 0 and wholeNumberPart[i] isn't comma or negative symbol
             } 
 
             const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with added comma to decimalNumberPart
@@ -206,6 +212,10 @@ function addComma(text) {
 
     return newString;
 }
+
+// function roundDisplayNumber(string) {
+
+// }
 
 function operate(firstNum, secondNum, operator) {
     switch (operator) {
