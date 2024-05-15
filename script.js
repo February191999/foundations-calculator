@@ -226,12 +226,44 @@ function roundDisplayNumber(string) {
     let decimalIndex = array.indexOf("."); //Find index of decimal
     let checkIfOverTen = isOverTen(array); //Check if array is over or equal to ten
 
-    if (decimalIndex === -1) {
+    if (decimalIndex === -1) { //If number is whole number and too big return a string to inform user
         if (checkIfOverTen === true) {
             return "That number is too big!"
         } 
-    }
+    } else {
+        let wholeNumberPartArray = array.slice(0, decimalIndex); //Get whole number part of string
+        let wholeNumberPart = wholeNumberPartArray.join("");
+        let wholeNumberPartLength = wholeNumberPart.length; 
+        let decimalNumberPart = array.slice(decimalIndex, (array.length + 1)); //Get decimal number part of string
 
+        if (checkIfOverTen === true) { //If string is over ten digits and has decimal
+            switch (wholeNumberPartLength) { 
+                case 1: //Whole number has one digit
+                    decimalNumberPart.splice(9); //Remove every number after index 9 so decimalNumberPart has only 9 digits
+                    
+                    if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
+                        decimalNumberPart.splice(8); //Remove last index item
+                        let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
+                        decimalNumberPart.splice(7); //Remove last index item
+                        decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
+
+                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+                        console.log(completeNumber);
+
+                        return completeNumber;
+                    } else {
+                        decimalNumberPart.splice(8); //Remove last index item that is less than 5
+
+                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+                        console.log(completeNumber);
+
+                        return completeNumber;
+                    }
+
+                     
+            }
+        }
+    }
 }
 
 function operate(firstNum, secondNum, operator) {
