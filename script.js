@@ -67,8 +67,8 @@ operateButton.addEventListener("click", () => {
     let displayValueToString = displayValue.toString();
     console.log(displayValueToString);
    
-    displayValue = displayValueToString;
-    displayPara.textContent = addComma(displayValue);
+    displayValue = roundDisplayNumber(displayValueToString);
+    displayPara.textContent = displayValue;
     displayDiv.appendChild(displayPara);
 })
 
@@ -165,14 +165,14 @@ del.addEventListener("click", () => {
     displayDiv.appendChild(displayPara);
 })
 
-function addComma(text) {
-    let array = text.split(""); //Split text into array
+function addComma(string) {
+    let array = string.split(""); //Split text into array
     let newArray = []; 
     let newStringArray = [];
     array.map((char) => { //Unshift characters from array into newArray
         newArray.unshift(char);
     }); 
-    let decimalIndex = array.indexOf(".");
+    let decimalIndex = array.indexOf("."); //Find index of decimal
 
     if (array.includes(".") === true) { //Check if array includes decimal and return text if yes
         return array.join("");
@@ -213,9 +213,18 @@ function addComma(text) {
     return newString;
 }
 
-// function roundDisplayNumber(string) {
+function roundDisplayNumber(string) {
+    let array = string.split("");
+    let decimalIndex = array.indexOf("."); //Find index of decimal
+    let checkIfOverTen = isOverTen(array); //Check if array is over or equal to ten
 
-// }
+    if (decimalIndex === -1) {
+        if (checkIfOverTen === true) {
+            return "That number is too big!"
+        } 
+    }
+
+}
 
 function operate(firstNum, secondNum, operator) {
     switch (operator) {
