@@ -166,15 +166,36 @@ function addComma(text) {
     array.map((char) => { //Unshift characters from array into newArray
         newArray.unshift(char);
     }); 
+    let decimalIndex = array.indexOf(".");
 
     if (array.includes(".") === true) { //Check if array includes decimal and return text if yes
         return array.join("");
     }
 
-    for (let i = 0; i < newArray.length; i++) {   
-        if (i % 3 === 0 && i !== 0 && newArray[i] !== "," && newArray[i] !== "." && newArray[i] !== "-") { 
-            newArray[i] += ","; //Add comma to newArray if i is divisible by 3 and isn't 0 and newArray[i] isn't comma, decimal, or negative symbol
+    if (decimalIndex !== -1) { //Execute code below if no decimal
+        let wholeNumberPart = array.slice(0, decimalIndex) 
+        console.log(wholeNumberPart);
+        let decimalNumberPart = array.slice(decimalIndex, (array.length + 1));
+        console.log(decimalNumberPart);
+
+        for (let i = 0; i < wholeNumberPart.length; i++) {   
+            if (i % 3 === 0 && i !== 0 && wholeNumberPart[i] !== "," && wholeNumberPart[i] !== "-") { 
+                wholeNumberPart[i] += ","; //Add comma to wholeNumberPartt if i is divisible by 3 and isn't 0 and wholeNumberPart[i] isn't comma or negative symbol
+            } 
+
+            const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with added comma to decimalNumberPart
+
+            console.log(completeNumber);
+
+            return completeNumber;
+
         } 
+    } else {
+        for (let i = 0; i < newArray.length; i++) {   
+            if (i % 3 === 0 && i !== 0 && newArray[i] !== "," && newArray[i] !== "-") { 
+                newArray[i] += ","; //Add comma to newArray if i is divisible by 3 and isn't 0 and newArray[i] isn't comma or negative symbol
+            } 
+        }
     }
 
     newArray.map((char) => { //Unshift characters into newStringArray to get correct order of numbers
