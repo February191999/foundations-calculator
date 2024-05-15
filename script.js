@@ -67,9 +67,16 @@ operateButton.addEventListener("click", () => {
     let displayValueToString = displayValue.toString();
     console.log(displayValueToString);
    
-    displayValue = roundDisplayNumber(displayValueToString);
-    displayPara.textContent = displayValue;
-    displayDiv.appendChild(displayPara);
+    displayValue = roundDisplayNumber(displayValueToString); //Check if displayValue is too big or if decimal value is too big
+
+    if (displayValue === "That number is too big!") { //If whole number is too big, returns a string to say so
+        displayPara.setAttribute("style", "display: flex; font-size: 3em; font-weight: bold; margin: 0; max-width: 100%; padding: 10px;"); 
+        displayPara.textContent = displayValue;
+        displayDiv.appendChild(displayPara);
+    } else {
+        displayPara.textContent = addComma(displayValue);
+        displayDiv.appendChild(displayPara);
+    }
 })
 
 numbers.forEach(num => num.addEventListener("click", () => {
