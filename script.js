@@ -47,10 +47,8 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
         console.log(`first num is ${firstNumber}`);
         console.log(`Second num is ${secondNumber}`);
         displayValue = ""; //Reset displayValue
-        console.log(displayValue);
         displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
         operator = button.value;
-        console.log(operator);
     }
 }))
 
@@ -60,14 +58,28 @@ operateButton.addEventListener("click", () => {
     displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
     displayValue = operate(firstNumber, secondNumber, operator); //Store operated value in displayValue
 
-    firstNumber = displayValue; //Store displayValue in firstNumber so users can use previous results in other operations
+    firstNumber = Number(displayValue); //Store displayValue in firstNumber so users can use previous results in other operations
 
     secondNumber = ""; //Reset secondNumber value to take in new number in anticipation of another operation with previous result
 
+    console.log(typeof(displayValue));
+    console.log(displayValue);
+
     let displayValueToString = displayValue.toString();
+    console.log(typeof(displayValueToString));
     console.log(displayValueToString);
+
+
+    let roundedDisplayValue = roundDisplayNumber(displayValueToString);
+
+    console.log(roundedDisplayValue);
+    console.log(typeof(roundedDisplayValue));
+
    
-    displayValue = roundDisplayNumber(displayValueToString); //Check if displayValue is too big or if decimal value is too big
+    displayValue = roundedDisplayValue; //Check if displayValue is too big or if decimal value is too big
+
+    console.log(displayValue);
+    console.log(typeof(displayValue));
 
     if (displayValue === "That number is too big!") { //If whole number is too big, returns a string to say so
         displayPara.setAttribute("style", "display: flex; font-size: 3em; font-weight: bold; margin: 0; max-width: 100%; padding: 10px;"); 
@@ -138,7 +150,6 @@ decimal.addEventListener("click", () => {
     } else {
         if (checkDecimal === undefined) { //If checkDecimal returns undefined, decimal button works
         decimal.ariaDisabled = "false"; 
-        console.log(decimal.ariaDisabled)
         let displayValueWithComma = addComma(displayValue);
 
         displayValue = displayValueWithComma + decimal.value; //Adds decimal to displayValue
@@ -222,22 +233,28 @@ function addComma(string) {
 }
 
 function roundDisplayNumber(string) {
-    let array = string.split("");
+    let toString = string.toString(); //Make sure string is string
+    let array = toString.split("");
     let decimalIndex = array.indexOf("."); //Find index of decimal
     let checkIfOverTen = isOverTen(array); //Check if array is over or equal to ten
 
     if (decimalIndex === -1) { //If number is whole number and too big return a string to inform user
         if (checkIfOverTen === true) {
-            return "That number is too big!"
-        } 
+            let alert = "That number is too big!";
+            return alert;
+        } else {
+            return toString;
+        }
     } else {
         let wholeNumberPartArray = array.slice(0, decimalIndex); //Get whole number part of string
         let wholeNumberPart = wholeNumberPartArray.join("");
-        let wholeNumberPartLength = wholeNumberPart.length; 
+        // let wholeNumberPartLength = wholeNumberPart.length; 
         let decimalNumberPart = array.slice(decimalIndex, (array.length + 1)); //Get decimal number part of string
 
+        console.log(array);     
+
         if (checkIfOverTen === true) { //If string is over ten digits and has decimal
-            switch (wholeNumberPartLength) { 
+            switch (wholeNumberPart.length) { 
                 case 1: //Whole number has one digit
                     decimalNumberPart.splice(9); //Remove every number after index 9 so decimalNumberPart has only 9 digits
                     
@@ -246,6 +263,8 @@ function roundDisplayNumber(string) {
                         let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
                         decimalNumberPart.splice(7); //Remove last index item
                         decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
+
+                        console.log(decimalNumberPart);
 
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
@@ -412,6 +431,9 @@ function roundDisplayNumber(string) {
 
                         return completeNumber.join("");
                     } 
+                // default: 
+                    
+                //     return toString;
             }
         }
     }
