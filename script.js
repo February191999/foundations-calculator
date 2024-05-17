@@ -42,7 +42,7 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
         displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
         operator = button.value;
         console.log(operator);
-    } else {
+    } else if (firstNumber === "") {
         firstNumber = Number(displayValue); //Store displayValue in firstNumber and change value type to number 
         console.log(`first num is ${firstNumber}`);
         console.log(`Second num is ${secondNumber}`);
@@ -95,7 +95,12 @@ numbers.forEach(num => num.addEventListener("click", () => {
 
     displayValue += num.value; //Add num value to displayValue for each click on buttons with number class
 
+    console.log(displayValue);
+
     let splitDisplayValue = displayValue.split(""); //Split string into array
+
+    console.log(`splitDisplayValue is ${splitDisplayValue}`);
+
     let checkIfOverTen = isOverTen(splitDisplayValue); //Check if array length is over ten
     
     if (checkIfOverTen === true) { //Disable numbers buttons if over ten digits
@@ -103,6 +108,7 @@ numbers.forEach(num => num.addEventListener("click", () => {
     } 
     else if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
         displayPara.textContent = displayValue;
+        console.log(displayValue);
         displayDiv.appendChild(displayPara);
     } 
     else {
@@ -159,6 +165,8 @@ decimal.addEventListener("click", () => {
         displayValue = displayValueWithComma + decimal.value; //Adds decimal to displayValue
 
         console.log(`displayValue = ${displayValue}`);
+        console.log(`displayValue = ${typeof(displayValue)}`);
+
 
         displayPara.textContent = displayValue;
 
@@ -276,14 +284,22 @@ function roundDisplayNumber(string) {
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber;
+                        let joinedCompleteNumber = addComma(completeNumber.join(""));
+
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     } else {
                         decimalNumberPart.splice(8); //Round down last index item that is less than 5
 
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber.join("");
+                        let joinedCompleteNumber = addComma(completeNumber.join(""));
+
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     }
 
                 case 2: //Whole number has two digits
@@ -298,14 +314,21 @@ function roundDisplayNumber(string) {
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber;
+                        let joinedCompleteNumber = addComma(completeNumber.join(""));
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     } else {
                         decimalNumberPart.splice(7); //Round down last index item that is less than 5
 
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
+                        console.log(`completeNumber is ${completeNumber}`);
 
-                        return completeNumber.join("");
+                        let joinedCompleteNumber = addComma(completeNumber.join(""));
+
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     }
                 case 3: //Whole number has three digits
                     decimalNumberPart.splice(7); //Remove every number after index 7 so decimalNumberPart has only 7 digits
@@ -319,14 +342,22 @@ function roundDisplayNumber(string) {
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber;
+                        let joinedCompleteNumber = addComma(completeNumber.join(""));
+
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     } else {
                         decimalNumberPart.splice(6); //Round down last index item that is less than 5
 
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber.join("");
+                        let joinedCompleteNumber = addComma(completeNumber.join(""));
+
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     }    
 
                 case 4: //Whole number has four digits
@@ -341,14 +372,22 @@ function roundDisplayNumber(string) {
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber;
+                        let joinedCompleteNumber = completeNumber.join("");
+
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     } else {
                         decimalNumberPart.splice(5); //Round down last index item that is less than 5
 
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber.join("");
+                        let joinedCompleteNumber = completeNumber.join("");
+
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     }    
 
                 case 5: //Whole number has five digits
@@ -363,14 +402,22 @@ function roundDisplayNumber(string) {
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber;
+                        let joinedCompleteNumber = completeNumber.join("");
+
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     } else {
                         decimalNumberPart.splice(4); //Round down last index item that is less than 5
 
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber.join("");
+                        let joinedCompleteNumber = completeNumber.join("");
+
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     }    
 
                 case 6: //Whole number has six digits
@@ -385,14 +432,22 @@ function roundDisplayNumber(string) {
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber;
+                        let joinedCompleteNumber = completeNumber.join("");
+                        
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     } else {
                         decimalNumberPart.splice(3); //Round down last index item that is less than 5
 
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber.join("");
+                        let joinedCompleteNumber = completeNumber.join("");
+
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     } 
 
                 case 7: //Whole number has seven digits
@@ -407,14 +462,22 @@ function roundDisplayNumber(string) {
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber;
+                        let joinedCompleteNumber = completeNumber.join("");
+
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     } else {
                         decimalNumberPart.splice(2); //Round down last index item that is less than 5
 
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber.join("");
+                        let joinedCompleteNumber = completeNumber.join("");
+
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     } 
 
                 case 8: //Whole number has eight digits
@@ -429,16 +492,26 @@ function roundDisplayNumber(string) {
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber;
+                        let joinedCompleteNumber = completeNumber.join("");
+
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     } else {
                         decimalNumberPart.splice(1); //Round down last index item that is less than 5
 
                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
                         console.log(completeNumber);
 
-                        return completeNumber.join("");
+                        let joinedCompleteNumber = completeNumber.join("");
+
+                        console.log(joinedCompleteNumber);
+
+                        return joinedCompleteNumber;
                     } 
             }
+        } else {
+            return addComma(toString);
         }
     }
 }
