@@ -108,6 +108,8 @@ numbers.forEach(num => num.addEventListener("click", () => {
     else {
         displayPara.textContent = addComma(displayValue);
 
+        console.log(displayValue);
+
         displayDiv.appendChild(displayPara);
     }
 }))
@@ -152,7 +154,11 @@ decimal.addEventListener("click", () => {
         decimal.ariaDisabled = "false"; 
         let displayValueWithComma = addComma(displayValue);
 
+        console.log(`displayValue = ${displayValueWithComma}`);
+
         displayValue = displayValueWithComma + decimal.value; //Adds decimal to displayValue
+
+        console.log(`displayValue = ${displayValue}`);
 
         displayPara.textContent = displayValue;
 
@@ -185,7 +191,8 @@ del.addEventListener("click", () => {
 })
 
 function addComma(string) {
-    let array = string.split(""); //Split text into array
+    let toString = string.toString(); //Make sure that string is string
+    let array = toString.split(""); //Split text into array
     let newArray = []; 
     let newStringArray = [];
     array.map((char) => { //Unshift characters from array into newArray
@@ -431,9 +438,6 @@ function roundDisplayNumber(string) {
 
                         return completeNumber.join("");
                     } 
-                // default: 
-                    
-                //     return toString;
             }
         }
     }
