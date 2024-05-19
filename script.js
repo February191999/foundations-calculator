@@ -31,6 +31,7 @@ let firstNumber = "";
 let secondNumber = "";
 let operator = "";
 let displayValue = "";
+const tooBigNum = "That number is too big!";
 
 operatorButtons.forEach(button => button.addEventListener("click", () => {
 
@@ -75,17 +76,21 @@ operateButton.addEventListener("click", () => {
     console.log(roundedDisplayValue);
     console.log(typeof(roundedDisplayValue));
 
-   
-    displayValue = roundedDisplayValue; //Check if displayValue is too big or if decimal value is too big
+    console.log(`Display textContent is ${displayPara.textContent}`);
+    console.log(`Display value is ${displayValue}`);
 
-    console.log(displayValue);
-    console.log(typeof(displayValue));
-
-    if (displayValue === "That number is too big!") { //If whole number is too big, returns a string to say so
+    if (roundedDisplayValue === tooBigNum) { //If whole number is too big, returns a string to say so
         displayPara.setAttribute("style", "display: flex; font-size: 3em; font-weight: bold; margin: 0; max-width: 100%; padding: 10px;"); 
+        displayValue = roundedDisplayValue;
         displayPara.textContent = displayValue;
         displayDiv.appendChild(displayPara);
     } else {
+
+        displayValue = addComma(roundedDisplayValue); //Check if displayValue is too big or if decimal value is too big
+
+        console.log(displayValue);
+        console.log(typeof(displayValue));
+
         displayPara.textContent = addComma(displayValue);
         displayDiv.appendChild(displayPara);
     }
@@ -147,7 +152,7 @@ function isDecimal(item) {
 }
 
 decimal.addEventListener("click", () => {
-    
+     
     let splitDisplayValue = displayValue.split(""); //Split string into array
     let checkDecimal = splitDisplayValue.find(isDecimal); //Check if array has a period
     let checkIfOverTen = isOverTen(splitDisplayValue); //Check if array is over or equal to ten
@@ -249,16 +254,16 @@ function addComma(string) {
 
 function roundDisplayNumber(string) {
     let toString = string.toString(); //Make sure string is string
-    let toNum = Number(string);
-    let array = toString.split("");
+    let toNum = Number(string); //Make sure string is number
+    let array = toString.split(""); 
     let decimalIndex = array.indexOf("."); //Find index of decimal
     let checkIfOverTen = isOverTen(array); //Check if array is over or equal to ten
 
     if (checkIfOverTen === true && array.includes(".") === true) {
-        return toNum.toFixed("8");
+        return toNum.toFixed("8"); 
     } else if (decimalIndex === -1) { //If number is whole number and too big return a string to inform user
         if (checkIfOverTen === true) {
-            let alert = "That number is too big!";
+            let alert = tooBigNum;
             return alert;
         } else {
             return toString;
