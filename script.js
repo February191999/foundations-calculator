@@ -35,7 +35,7 @@ let displayValue = "";
 operatorButtons.forEach(button => button.addEventListener("click", () => {
 
     if (firstNumber !== "") {
-        secondNumber = Number(displayValue);//Store displayValue in secondNumber and change value type to number if firstNumber variable isn't empty
+        secondNumber = displayValue;//Store displayValue in secondNumber and change value type to number if firstNumber variable isn't empty
         console.log(`first num is ${firstNumber}`);
         console.log(`Second num is ${secondNumber}`);
         displayValue = ""; //Reset displayValue
@@ -43,7 +43,7 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
         operator = button.value;
         console.log(operator);
     } else if (firstNumber === "") {
-        firstNumber = Number(displayValue); //Store displayValue in firstNumber and change value type to number 
+        firstNumber = displayValue; //Store displayValue in firstNumber and change value type to number 
         console.log(`first num is ${firstNumber}`);
         console.log(`Second num is ${secondNumber}`);
         displayValue = ""; //Reset displayValue
@@ -54,11 +54,11 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
 
 operateButton.addEventListener("click", () => {
     
-    secondNumber = Number(displayValue); //Store displayValue in secondNumber 
+    secondNumber = displayValue; //Store displayValue in secondNumber 
     displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
-    displayValue = operate(firstNumber, secondNumber, operator); //Store operated value in displayValue
+    displayValue = operate(Number(firstNumber), Number(secondNumber), operator); //Store operated value in displayValue
 
-    firstNumber = Number(displayValue); //Store displayValue in firstNumber so users can use previous results in other operations
+    firstNumber = displayValue; //Store displayValue in firstNumber so users can use previous results in other operations
 
     secondNumber = ""; //Reset secondNumber value to take in new number in anticipation of another operation with previous result
 
@@ -208,11 +208,11 @@ function addComma(string) {
     }); 
     let decimalIndex = array.indexOf("."); //Find index of decimal
 
-    if (array.includes(".") === true) { //Check if array includes decimal and return text if yes
-        return array.join("");
-    }
-
-    if (decimalIndex !== -1) { //Execute code below if decimal is found
+    if (array.includes(".") === true && array.includes(",") === true) { //Return text if array includes decimal and comma
+        return string;
+    } else if (array.includes(".") === true && array.includes(",") === false) {
+        return string;
+    } else if (decimalIndex !== -1) { //Execute code below if decimal is found
         let wholeNumberPart = array.slice(0, decimalIndex) 
         console.log(wholeNumberPart);
         let decimalNumberPart = array.slice(decimalIndex, (array.length + 1));
@@ -230,7 +230,7 @@ function addComma(string) {
             return completeNumber;
 
         } 
-    } else {
+    } else if (array.includes(".") === false && array.includes(",") === false) {
         for (let i = 0; i < newArray.length; i++) {   
             if (i % 3 === 0 && i !== 0 && newArray[i] !== "," && newArray[i] !== "-") { 
                 newArray[i] += ","; //Add comma to newArray if i is divisible by 3 and isn't 0 and newArray[i] isn't comma or negative symbol
@@ -249,272 +249,331 @@ function addComma(string) {
 
 function roundDisplayNumber(string) {
     let toString = string.toString(); //Make sure string is string
+    let toNum = Number(string);
     let array = toString.split("");
     let decimalIndex = array.indexOf("."); //Find index of decimal
     let checkIfOverTen = isOverTen(array); //Check if array is over or equal to ten
 
-    if (decimalIndex === -1) { //If number is whole number and too big return a string to inform user
+    if (checkIfOverTen === true && array.includes(".") === true && array.includes(",") !== true) {
+        return toNum.toFixed("8");
+    } else if (decimalIndex === -1) { //If number is whole number and too big return a string to inform user
         if (checkIfOverTen === true) {
             let alert = "That number is too big!";
             return alert;
         } else {
             return toString;
         }
-    } else {
-        let wholeNumberPartArray = array.slice(0, decimalIndex); //Get whole number part of string
-        let wholeNumberPart = wholeNumberPartArray.join("");
-        // let wholeNumberPartLength = wholeNumberPart.length; 
-        let decimalNumberPart = array.slice(decimalIndex, (array.length + 1)); //Get decimal number part of string
-
-        console.log(array);     
+    } else {    
 
         if (checkIfOverTen === true) { //If string is over ten digits and has decimal
-            switch (wholeNumberPart.length) { 
-                case 1: //Whole number has one digit
-                    decimalNumberPart.splice(9); //Remove every number after index 9 so decimalNumberPart has only 9 digits
-                    
-                    if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
-                        decimalNumberPart.splice(8); //Remove last index item
-                        let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
-                        decimalNumberPart.splice(7); //Remove last index item
-                        decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
-
-                        console.log(decimalNumberPart);
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = addComma(completeNumber.join(""));
-
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    } else {
-                        decimalNumberPart.splice(8); //Round down last index item that is less than 5
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = addComma(completeNumber.join(""));
-
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    }
-
-                case 2: //Whole number has two digits
-                    decimalNumberPart.splice(8); //Remove every number after index 8 so decimalNumberPart has only 8 digits
-                    
-                    if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
-                        decimalNumberPart.splice(7); //Remove last index item
-                        let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
-                        decimalNumberPart.splice(6); //Remove last index item
-                        decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = addComma(completeNumber.join(""));
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    } else {
-                        decimalNumberPart.splice(7); //Round down last index item that is less than 5
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(`completeNumber is ${completeNumber}`);
-
-                        let joinedCompleteNumber = addComma(completeNumber.join(""));
-
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    }
-                case 3: //Whole number has three digits
-                    decimalNumberPart.splice(7); //Remove every number after index 7 so decimalNumberPart has only 7 digits
-                    
-                    if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
-                        decimalNumberPart.splice(6); //Remove last index item
-                        let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
-                        decimalNumberPart.splice(5); //Remove last index item
-                        decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = addComma(completeNumber.join(""));
-
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    } else {
-                        decimalNumberPart.splice(6); //Round down last index item that is less than 5
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = addComma(completeNumber.join(""));
-
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    }    
-
-                case 4: //Whole number has four digits
-                    decimalNumberPart.splice(6); //Remove every number after index 6 so decimalNumberPart has only 6 digits
-                    
-                    if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
-                        decimalNumberPart.splice(5); //Remove last index item
-                        let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
-                        decimalNumberPart.splice(4); //Remove last index item
-                        decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = completeNumber.join("");
-
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    } else {
-                        decimalNumberPart.splice(5); //Round down last index item that is less than 5
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = completeNumber.join("");
-
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    }    
-
-                case 5: //Whole number has five digits
-                    decimalNumberPart.splice(5); //Remove every number after index 5 so decimalNumberPart has only 5 digits
-                    
-                    if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
-                        decimalNumberPart.splice(4); //Remove last index item
-                        let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
-                        decimalNumberPart.splice(3); //Remove last index item
-                        decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = completeNumber.join("");
-
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    } else {
-                        decimalNumberPart.splice(4); //Round down last index item that is less than 5
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = completeNumber.join("");
-
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    }    
-
-                case 6: //Whole number has six digits
-                    decimalNumberPart.splice(4); //Remove every number after index 4 so decimalNumberPart has only 4 digits
-                    
-                    if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
-                        decimalNumberPart.splice(3); //Remove last index item
-                        let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
-                        decimalNumberPart.splice(2); //Remove last index item
-                        decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = completeNumber.join("");
-                        
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    } else {
-                        decimalNumberPart.splice(3); //Round down last index item that is less than 5
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = completeNumber.join("");
-
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    } 
-
-                case 7: //Whole number has seven digits
-                    decimalNumberPart.splice(3); //Remove every number after index 3 so decimalNumberPart has only 3 digits
-                    
-                    if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
-                        decimalNumberPart.splice(2); //Remove last index item
-                        let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
-                        decimalNumberPart.splice(1); //Remove last index item
-                        decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = completeNumber.join("");
-
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    } else {
-                        decimalNumberPart.splice(2); //Round down last index item that is less than 5
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = completeNumber.join("");
-
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    } 
-
-                case 8: //Whole number has eight digits
-                    decimalNumberPart.splice(2); //Remove every number after index 2 so decimalNumberPart has only 2 digits
-                    
-                    if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
-                        decimalNumberPart.splice(1); //Remove last index item
-                        let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
-                        decimalNumberPart.splice(0); //Remove last index item
-                        decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = completeNumber.join("");
-
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    } else {
-                        decimalNumberPart.splice(1); //Round down last index item that is less than 5
-
-                        const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
-                        console.log(completeNumber);
-
-                        let joinedCompleteNumber = completeNumber.join("");
-
-                        console.log(joinedCompleteNumber);
-
-                        return joinedCompleteNumber;
-                    } 
-            }
+            return toNum.toPrecision(9);
         } else {
             return addComma(toString);
         }
     }
 }
+
+// function roundDisplayNumber(string) {
+//     let toString = string.toString(); //Make sure string is string
+//     let array = toString.split("");
+//     let decimalIndex = array.indexOf("."); //Find index of decimal
+//     let checkIfOverTen = isOverTen(array); //Check if array is over or equal to ten
+
+//     if (decimalIndex === -1) { //If number is whole number and too big return a string to inform user
+//         if (checkIfOverTen === true) {
+//             let alert = "That number is too big!";
+//             return alert;
+//         } else {
+//             return toString;
+//         }
+//     } else {
+//         let wholeNumberPartArray = array.slice(0, decimalIndex); //Get whole number part of string
+//         let wholeNumberPart = wholeNumberPartArray.join("");
+//         // let wholeNumberPartLength = wholeNumberPart.length; 
+//         let decimalNumberPart = array.slice(decimalIndex, (array.length + 1)); //Get decimal number part of string
+
+//         console.log(array);     
+
+//         if (checkIfOverTen === true) { //If string is over ten digits and has decimal
+//             switch (wholeNumberPart.length) { 
+//                 case 1: //Whole number has one digit
+//                     decimalNumberPart.splice(9); //Remove every number after index 9 so decimalNumberPart has only 9 digits
+                    
+//                     if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
+//                         decimalNumberPart.splice(8); //Remove last index item
+//                         let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
+//                         decimalNumberPart.splice(7); //Remove last index item
+//                         decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
+
+//                         console.log(decimalNumberPart);
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+
+//                         let joinedCompleteNumber = addComma(completeNumber.join(""));
+
+//                         console.log(joinedCompleteNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         return joinedCompleteNumber;
+//                     } else {
+//                         decimalNumberPart.splice(8); //Round down last index item that is less than 5
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+//                         console.log(typeOf(completeNumber));
+
+//                         let joinedCompleteNumber = addComma(completeNumber.join(""));
+
+//                         console.log(joinedCompleteNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         return joinedCompleteNumber;
+//                     }
+
+//                 case 2: //Whole number has two digits
+//                     decimalNumberPart.splice(8); //Remove every number after index 8 so decimalNumberPart has only 8 digits
+                    
+//                     if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
+//                         decimalNumberPart.splice(7); //Remove last index item
+//                         let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
+//                         decimalNumberPart.splice(6); //Remove last index item
+//                         decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+
+//                         let joinedCompleteNumber = addComma(completeNumber.join(""));
+//                         console.log(joinedCompleteNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         return joinedCompleteNumber;
+//                     } else {
+//                         decimalNumberPart.splice(7); //Round down last index item that is less than 5
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(`completeNumber is ${completeNumber}`);
+
+//                         let joinedCompleteNumber = addComma(completeNumber.join(""));
+
+//                         console.log(joinedCompleteNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         return joinedCompleteNumber;
+//                     }
+//                 case 3: //Whole number has three digits
+//                     decimalNumberPart.splice(7); //Remove every number after index 7 so decimalNumberPart has only 7 digits
+                    
+//                     if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
+//                         decimalNumberPart.splice(6); //Remove last index item
+//                         let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
+//                         decimalNumberPart.splice(5); //Remove last index item
+//                         decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+
+//                         let joinedCompleteNumber = addComma(completeNumber.join(""));
+
+//                         console.log(joinedCompleteNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         return joinedCompleteNumber;
+//                     } else {
+//                         decimalNumberPart.splice(6); //Round down last index item that is less than 5
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+
+//                         let joinedCompleteNumber = addComma(completeNumber.join(""));
+
+//                         console.log(joinedCompleteNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         return joinedCompleteNumber;
+//                     }    
+
+//                 case 4: //Whole number has four digits
+//                     decimalNumberPart.splice(6); //Remove every number after index 6 so decimalNumberPart has only 6 digits
+                    
+//                     if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
+//                         decimalNumberPart.splice(5); //Remove last index item
+//                         let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
+//                         decimalNumberPart.splice(4); //Remove last index item
+//                         decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         let joinedCompleteNumber = completeNumber.join("");
+
+//                         console.log(joinedCompleteNumber);
+
+//                         return joinedCompleteNumber;
+//                     } else {
+//                         decimalNumberPart.splice(5); //Round down last index item that is less than 5
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         let joinedCompleteNumber = completeNumber.join("");
+
+//                         console.log(joinedCompleteNumber);
+
+//                         return joinedCompleteNumber;
+//                     }    
+
+//                 case 5: //Whole number has five digits
+//                     decimalNumberPart.splice(5); //Remove every number after index 5 so decimalNumberPart has only 5 digits
+                    
+//                     if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
+//                         decimalNumberPart.splice(4); //Remove last index item
+//                         let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
+//                         decimalNumberPart.splice(3); //Remove last index item
+//                         decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         let joinedCompleteNumber = completeNumber.join("");
+
+//                         console.log(joinedCompleteNumber);
+
+//                         return joinedCompleteNumber;
+//                     } else {
+//                         decimalNumberPart.splice(4); //Round down last index item that is less than 5
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         let joinedCompleteNumber = completeNumber.join("");
+
+//                         console.log(joinedCompleteNumber);
+
+//                         return joinedCompleteNumber;
+//                     }    
+
+//                 case 6: //Whole number has six digits
+//                     decimalNumberPart.splice(4); //Remove every number after index 4 so decimalNumberPart has only 4 digits
+                    
+//                     if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
+//                         decimalNumberPart.splice(3); //Remove last index item
+//                         let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
+//                         decimalNumberPart.splice(2); //Remove last index item
+//                         decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         let joinedCompleteNumber = completeNumber.join("");
+                        
+//                         console.log(joinedCompleteNumber);
+
+//                         return joinedCompleteNumber;
+//                     } else {
+//                         decimalNumberPart.splice(3); //Round down last index item that is less than 5
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         let joinedCompleteNumber = completeNumber.join("");
+
+//                         console.log(joinedCompleteNumber);
+
+//                         return joinedCompleteNumber;
+//                     } 
+
+//                 case 7: //Whole number has seven digits
+//                     decimalNumberPart.splice(3); //Remove every number after index 3 so decimalNumberPart has only 3 digits
+                    
+//                     if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
+//                         decimalNumberPart.splice(2); //Remove last index item
+//                         let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
+//                         decimalNumberPart.splice(1); //Remove last index item
+//                         decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         let joinedCompleteNumber = completeNumber.join("");
+
+//                         console.log(joinedCompleteNumber);
+
+//                         return joinedCompleteNumber;
+//                     } else {
+//                         decimalNumberPart.splice(2); //Round down last index item that is less than 5
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         let joinedCompleteNumber = completeNumber.join("");
+
+//                         console.log(joinedCompleteNumber);
+
+//                         return joinedCompleteNumber;
+//                     } 
+
+//                 case 8: //Whole number has eight digits
+//                     decimalNumberPart.splice(2); //Remove every number after index 2 so decimalNumberPart has only 2 digits
+                    
+//                     if (Number(decimalNumberPart[-1]) >= 5) { //Execute code to round up if last array item has a value more than or equal to 5
+//                         decimalNumberPart.splice(1); //Remove last index item
+//                         let roundedNum = Number(decimalNumberPart[-1]) + 1; //Calculate new rounded number
+//                         decimalNumberPart.splice(0); //Remove last index item
+//                         decimalNumberPart.push(roundedNum.toString()); //Push rounded number to be new last index item
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         let joinedCompleteNumber = completeNumber.join("");
+
+//                         console.log(joinedCompleteNumber);
+
+//                         return joinedCompleteNumber;
+//                     } else {
+//                         decimalNumberPart.splice(1); //Round down last index item that is less than 5
+
+//                         const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with decimalNumberPart
+//                         console.log(completeNumber);
+//                         console.log(typeOf(completeNumber));
+
+
+//                         let joinedCompleteNumber = completeNumber.join("");
+
+//                         console.log(joinedCompleteNumber);
+
+//                         return joinedCompleteNumber;
+//                     } 
+//             }
+//         } else {
+//             return addComma(toString);
+//         }
+//     }
+// }
 
 function operate(firstNum, secondNum, operator) {
     switch (operator) {
