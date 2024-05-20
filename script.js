@@ -37,16 +37,12 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
 
     if (firstNumber !== "") {
         secondNumber = displayValue;//Store displayValue in secondNumber and change value type to number if firstNumber variable isn't empty
-        console.log(`first num is ${firstNumber}`);
-        console.log(`Second num is ${secondNumber}`);
         displayValue = ""; //Reset displayValue
         displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
         operator = button.value;
         console.log(operator);
     } else if (firstNumber === "") {
         firstNumber = displayValue; //Store displayValue in firstNumber and change value type to number 
-        console.log(`first num is ${firstNumber}`);
-        console.log(`Second num is ${secondNumber}`);
         displayValue = ""; //Reset displayValue
         displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
         operator = button.value;
@@ -57,27 +53,39 @@ operateButton.addEventListener("click", () => {
     
     secondNumber = displayValue; //Store displayValue in secondNumber 
     displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
-    displayValue = operate(Number(firstNumber), Number(secondNumber), operator); //Store operated value in displayValue
+
+    firstNumber = firstNumber.toString();
+
+    let firstNumberArray = firstNumber.split("");
+    let firstNumberDecimalIndex = firstNumberArray.indexOf("."); //Find index of decimal
+
+    let secondNumberArray = secondNumber.split("");
+    let secondNumberDecimalIndex = secondNumberArray.indexOf("."); //Find index of decimal
+
+    if (firstNumberDecimalIndex === -1) {
+        firstNumber = parseInt(firstNumber);
+        console.log(`firstNum is ${firstNumber}`);
+    } else {
+        firstNumber = parseFloat(firstNumber);
+        console.log(`firstNum is ${firstNumber}`);
+    }
+
+    if (secondNumberDecimalIndex === -1) {
+        secondNumber = parseInt(secondNumber);
+        console.log(`secondNum is ${secondNumber}`);
+    } else {
+        secondNumber = parseFloat(secondNumber);
+        console.log(`secondNum is ${secondNumber}`);
+    }
+
+    displayValue = operate(firstNumber, secondNumber, operator); //Store operated value in displayValue
 
     firstNumber = displayValue; //Store displayValue in firstNumber so users can use previous results in other operations
 
     secondNumber = ""; //Reset secondNumber value to take in new number in anticipation of another operation with previous result
 
-    console.log(typeof(displayValue));
-    console.log(displayValue);
-
     let displayValueToString = displayValue.toString();
-    console.log(typeof(displayValueToString));
-    console.log(displayValueToString);
-
-
     let roundedDisplayValue = roundDisplayNumber(displayValueToString);
-
-    console.log(roundedDisplayValue);
-    console.log(typeof(roundedDisplayValue));
-
-    console.log(`Display textContent is ${displayPara.textContent}`);
-    console.log(`Display value is ${displayValue}`);
 
     if (roundedDisplayValue === tooBigNum) { //If whole number is too big, returns a string to say so
         displayPara.setAttribute("style", "display: flex; font-size: 3em; font-weight: bold; margin: 0; max-width: 100%; padding: 10px;"); 
@@ -86,10 +94,7 @@ operateButton.addEventListener("click", () => {
         displayDiv.appendChild(displayPara);
     } else {
 
-        displayValue = addComma(roundedDisplayValue); //Check if displayValue is too big or if decimal value is too big
-
-        console.log(displayValue);
-        console.log(typeof(displayValue));
+        displayValue = addComma(roundedDisplayValue); 
 
         displayPara.textContent = addComma(displayValue);
         displayDiv.appendChild(displayPara);
@@ -100,11 +105,7 @@ numbers.forEach(num => num.addEventListener("click", () => {
 
     displayValue += num.value; //Add num value to displayValue for each click on buttons with number class
 
-    console.log(displayValue);
-
     let splitDisplayValue = displayValue.split(""); //Split string into array
-
-    console.log(`splitDisplayValue is ${splitDisplayValue}`);
 
     let checkIfOverTen = isOverTen(splitDisplayValue); //Check if array length is over ten
     
@@ -113,13 +114,10 @@ numbers.forEach(num => num.addEventListener("click", () => {
     } 
     else if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
         displayPara.textContent = displayValue;
-        console.log(displayValue);
         displayDiv.appendChild(displayPara);
     } 
     else {
         displayPara.textContent = addComma(displayValue);
-
-        console.log(displayValue);
 
         displayDiv.appendChild(displayPara);
     }
@@ -165,13 +163,7 @@ decimal.addEventListener("click", () => {
         decimal.ariaDisabled = "false"; 
         let displayValueWithComma = addComma(displayValue);
 
-        console.log(`displayValue = ${displayValueWithComma}`);
-
         displayValue = displayValueWithComma + decimal.value; //Adds decimal to displayValue
-
-        console.log(`displayValue = ${displayValue}`);
-        console.log(`displayValue = ${typeof(displayValue)}`);
-
 
         displayPara.textContent = displayValue;
 
@@ -183,7 +175,6 @@ decimal.addEventListener("click", () => {
 })
 
 del.addEventListener("click", () => {
-    console.log(displayValue);
 
     let splitDisplayValue = displayValue.split(""); //Split string into array
     let checkIfOverTen = isOverTen(splitDisplayValue);
@@ -221,7 +212,6 @@ function addComma(string) {
         let wholeNumberPart = array.slice(0, decimalIndex) 
         console.log(wholeNumberPart);
         let decimalNumberPart = array.slice(decimalIndex, (array.length + 1));
-        console.log(decimalNumberPart);
 
         for (let i = 0; i < wholeNumberPart.length; i++) {   
             if (i % 3 === 0 && i !== 0 && wholeNumberPart[i] !== "," && wholeNumberPart[i] !== "-") { 
@@ -230,10 +220,7 @@ function addComma(string) {
 
             const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with added comma to decimalNumberPart
 
-            console.log(completeNumber);
-
             return completeNumber;
-
         } 
     } else if (array.includes(".") === false && array.includes(",") === false) {
         for (let i = 0; i < newArray.length; i++) {   
@@ -258,20 +245,21 @@ function roundDisplayNumber(string) {
     let array = toString.split(""); 
     let decimalIndex = array.indexOf("."); //Find index of decimal
     let checkIfOverTen = isOverTen(array); //Check if array is over or equal to ten
+    let wholeNumberPart = array.slice(0, decimalIndex); //Slices only the whole number
 
-    if (checkIfOverTen === true && array.includes(".") === true) {
-        return toNum.toFixed("8"); 
+    if (wholeNumberPart.length === 1 && array.includes(".") === true) {
+        return toNum.toFixed("8")/1; //Divide by one to prevent trailing 0s
     } else if (decimalIndex === -1) { //If number is whole number and too big return a string to inform user
         if (checkIfOverTen === true) {
             let alert = tooBigNum;
             return alert;
         } else {
-            return toString;
+          return toString;
         }
     } else {    
 
         if (checkIfOverTen === true) { //If string is over ten digits and has decimal
-            return toNum.toPrecision(9);
+            return (toNum.toPrecision(9))/1; //Divide by one to prevent trailing 0s
         } else {
             return addComma(toString);
         }
