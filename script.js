@@ -36,24 +36,31 @@ const tooBigNum = "That number is too big!";
 
 changeButton.addEventListener("click", () => {
 
-    let displayArray = displayValue.split("");
+    let displayArray = displayValue.split(""); //Split displayValue
 
     console.log(displayValue);
     console.log(displayArray);
 
-    if (displayValue.indexOf("-") === -1) {
+    if (displayValue.indexOf("-") === -1) { //If number isn't negative, unshift negative symbol
         displayArray.unshift("-");
         console.log(displayValue);
         console.log(displayArray);
-    } else {
+    } else if (displayValue.indexOf("-") !== -1) { //If number is negative, unshift negative symbol
         displayArray.shift();
         console.log(displayValue);
         console.log(displayArray);
     }
 
-    displayValue = displayArray.join("");
-    displayPara.textContent = displayValue;
-    displayDiv.appendChild(displayPara);
+    if (firstNumber === "") {
+        displayValue = displayArray.join("");
+        displayPara.textContent = displayValue;
+        displayDiv.appendChild(displayPara);
+    } else {
+        firstNumber = displayArray.join("");
+        displayValue = displayArray.join("");
+        displayPara.textContent = displayValue;
+        displayDiv.appendChild(displayPara);
+    }
 })
 
 operatorButtons.forEach(button => button.addEventListener("click", () => {
