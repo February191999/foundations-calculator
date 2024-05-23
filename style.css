@@ -67,7 +67,7 @@ body, .main-calc-div {
     flex: auto;
 }
 
-.zero, .operate{
+.operate{
     flex: 2;
     border-radius: 40px;
 }
@@ -76,7 +76,7 @@ body, .main-calc-div {
     gap: 5%;
 }
 
-.clear, .operate, .operator, .number, .decimal, .del, .right-column {
+.clear, .operate, .operator, .number, .change, .del, .right-column {
     flex: 1;
 }
 
