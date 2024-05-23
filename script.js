@@ -6,10 +6,11 @@ const clear = document.querySelector(".clear");
 const del = document.querySelector(".del");
 const decimal = document.querySelector(".decimal");
 const operateButton = document.querySelector(".operate");
+const changeButton = document.querySelector(".change");
 
 displayDiv.setAttribute("style", "display: flex; justify-content: flex-end; align-items: flex-end;");
 
-displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; max-width: 100%; padding-right: 10px;")
+displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; max-width: 100%; padding-right: 10px;");
 
 function addNumbers(firstNum, secondNum) {
     return firstNum + secondNum;
@@ -32,6 +33,28 @@ let secondNumber = "";
 let operator = "";
 let displayValue = "";
 const tooBigNum = "That number is too big!";
+
+changeButton.addEventListener("click", () => {
+
+    let displayArray = displayValue.split("");
+
+    console.log(displayValue);
+    console.log(displayArray);
+
+    if (displayValue.indexOf("-") === -1) {
+        displayArray.unshift("-");
+        console.log(displayValue);
+        console.log(displayArray);
+    } else {
+        displayArray.shift();
+        console.log(displayValue);
+        console.log(displayArray);
+    }
+
+    displayValue = displayArray.join("");
+    displayPara.textContent = displayValue;
+    displayDiv.appendChild(displayPara);
+})
 
 operatorButtons.forEach(button => button.addEventListener("click", () => {
 
