@@ -53,12 +53,19 @@ changeButton.addEventListener("click", () => {
 
     if (firstNumber === "") {
         displayValue = displayArray.join("");
-        displayPara.textContent = displayValue;
+        console.log(displayValue);
+        console.log(`firstNumber is ${firstNumber}`);
+        console.log(displayArray);
+        displayPara.textContent = addComma(displayValue);
         displayDiv.appendChild(displayPara);
-    } else {
+    } else if (firstNumber !== "") {
         firstNumber = displayArray.join("");
         displayValue = displayArray.join("");
-        displayPara.textContent = displayValue;
+        console.log(displayValue);
+        console.log(displayArray);
+        console.log(`firstNumber is ${firstNumber}`);
+
+        displayPara.textContent = addComma(displayValue);
         displayDiv.appendChild(displayPara);
     }
 })
@@ -71,11 +78,13 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
         displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
         operator = button.value;
         console.log(operator);
+        console.log(`firstNumber is ${firstNumber}`);
     } else if (firstNumber === "") {
         firstNumber = displayValue; //Store displayValue in firstNumber and change value type to number 
         displayValue = ""; //Reset displayValue
         displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
         operator = button.value;
+        console.log(`firstNumber is ${firstNumber}`);
     }
 }))
 
@@ -93,17 +102,21 @@ operateButton.addEventListener("click", () => {
     let secondNumberDecimalIndex = secondNumberArray.indexOf("."); //Find index of decimal
 
     if (firstNumberDecimalIndex === -1) {
+        console.log(`firstNum is ${firstNumber}`);
         firstNumber = parseInt(firstNumber);
         console.log(`firstNum is ${firstNumber}`);
-    } else {
+    } else if (firstNumber) {
+        console.log(`firstNum is ${firstNumber}`);
         firstNumber = parseFloat(firstNumber);
         console.log(`firstNum is ${firstNumber}`);
     }
 
     if (secondNumberDecimalIndex === -1) {
+        console.log(`secondNum is ${secondNumber}`);
         secondNumber = parseInt(secondNumber);
         console.log(`secondNum is ${secondNumber}`);
     } else {
+        console.log(`secondNum is ${secondNumber}`);
         secondNumber = parseFloat(secondNumber);
         console.log(`secondNum is ${secondNumber}`);
     }
@@ -123,10 +136,8 @@ operateButton.addEventListener("click", () => {
         displayPara.textContent = displayValue;
         displayDiv.appendChild(displayPara);
     } else {
-
         displayValue = addComma(roundedDisplayValue); 
-
-        displayPara.textContent = addComma(displayValue);
+        displayPara.textContent = displayValue;
         displayDiv.appendChild(displayPara);
     }
 })
@@ -141,12 +152,17 @@ numbers.forEach(num => num.addEventListener("click", () => {
     
     if (checkIfOverTen === true) { //Disable numbers buttons if over ten digits
         numbers.ariaDisabled = "true";
-    } 
-    else if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
+    } else if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
+        console.log("no1");
         displayPara.textContent = displayValue;
         displayDiv.appendChild(displayPara);
-    } 
-    else {
+    } else if (splitDisplayValue.includes(",") === false && splitDisplayValue.includes(".") === true) {
+        console.log("no2");
+        displayPara.textContent = addComma(displayValue);
+
+        displayDiv.appendChild(displayPara);
+    } else {
+        console.log("no3")
         displayPara.textContent = addComma(displayValue);
 
         displayDiv.appendChild(displayPara);
@@ -227,37 +243,61 @@ del.addEventListener("click", () => {
 function addComma(string) {
     let toString = string.toString(); //Make sure that string is string
     let array = toString.split(""); //Split text into array
-    let newArray = []; 
-    let newStringArray = [];
+    let newArray = []; //Empty array for reversed string
+    let newStringArray = []; //Empty array for new string array
     array.map((char) => { //Unshift characters from array into newArray
         newArray.unshift(char);
     }); 
     let decimalIndex = array.indexOf("."); //Find index of decimal
+    let reverseWholeNumber = []; //Empty array for reversed whole number array
+    let newWholeNumberPart = []; //Empty array for new whole number array
+    let wholeNumberPart = array.slice(0, decimalIndex) //Slice the whole number portion of number
+    wholeNumberPart.map((char) => {
+        reverseWholeNumber.unshift(char); //Unshift characters from wholeNumberPart to reverseWholeNumber in reverse order
+    })
+    let decimalNumberPart = array.slice(decimalIndex, (array.length + 1)); //Get decimal number part
 
-    if (array.includes(".") === true && array.includes(",") === true) { //Return text if array includes decimal and comma
-        return string;
-    } else if (array.includes(".") === true && array.includes(",") === false) {
-        return string;
-    } else if (decimalIndex !== -1) { //Execute code below if decimal is found
-        let wholeNumberPart = array.slice(0, decimalIndex) 
-        console.log(wholeNumberPart);
-        let decimalNumberPart = array.slice(decimalIndex, (array.length + 1));
+    if (decimalIndex !== -1 && array.includes(",") === false && array.includes("-")) { //Execute code below if decimal is found and number doesn't have comma but is negative
 
-        for (let i = 0; i < wholeNumberPart.length; i++) {   
-            if (i % 3 === 0 && i !== 0 && wholeNumberPart[i] !== "," && wholeNumberPart[i] !== "-") { 
-                wholeNumberPart[i] += ","; //Add comma to wholeNumberPart if i is divisible by 3 and isn't 0 and wholeNumberPart[i] isn't comma or negative symbol
+        for (let i = 0; i < reverseWholeNumber.length; i++) {   
+            if (i % 3 === 0 && i !== 0 && reverseWholeNumber[i] !== "-") { 
+                reverseWholeNumber[i] += ","; //Add comma to reverseWholeNumber if i is divisible by 3 and isn't 0 and reverseWholeNumber[i] isn't comma or negative symbol
             } 
+        }
 
-            const completeNumber = wholeNumberPart.concat(decimalNumberPart); //Combine wholeNumberPart with added comma to decimalNumberPart
+        reverseWholeNumber.map((char) => {
+            newWholeNumberPart.unshift(char); //Unshift characters from reversed array to right positions
+        });
 
-            return completeNumber;
-        } 
-    } else if (array.includes(".") === false && array.includes(",") === false) {
+        const completeNumber = newWholeNumberPart
+        .concat(decimalNumberPart) //Combine newWholeNumberPart with added comma to decimalNumberPart
+        .join(""); //Join array to string
+        return completeNumber; 
+    } else if (array.includes(".") === true && array.includes(",") === true) { //Return text if array includes decimal and comma
+        return string;
+    } else if (array.includes(".") === false && array.includes(",") === false) { //Execute if number doesn't have decimal and doesn't have comma
         for (let i = 0; i < newArray.length; i++) {   
-            if (i % 3 === 0 && i !== 0 && newArray[i] !== "," && newArray[i] !== "-") { 
+            if (i % 3 === 0 && i !== 0 && newArray[i] !== "-") { 
                 newArray[i] += ","; //Add comma to newArray if i is divisible by 3 and isn't 0 and newArray[i] isn't comma or negative symbol
             } 
         }
+    } else if (array.includes(".") === true && array.includes(",") === false && wholeNumberPart.length < 4) { //Execute if number is decimal but doesn't have comma and isn't a thousand or more
+        return string;
+    } else if (array.includes(".") === true && array.includes(",") === false) { //Execute if number is decimal but doesn't have comma
+        for (let i = 0; i < reverseWholeNumber.length; i++) {   
+            if (i % 3 === 0 && i !== 0 && reverseWholeNumber[i] !== "-") { 
+                reverseWholeNumber[i] += ","; //Add comma to reverseWholeNumber if i is divisible by 3 and isn't 0 and reverseWholeNumber[i] isn't comma or negative symbol
+            } 
+        }
+
+        reverseWholeNumber.map((char) => {
+            newWholeNumberPart.unshift(char); //Unshift characters from reversed array to right positions
+        });
+
+        const completeNumber = newWholeNumberPart
+        .concat(decimalNumberPart) //Combine newWholeNumberPart with added comma to decimalNumberPart
+        .join(""); //Join array to string
+        return completeNumber;
     }
 
     newArray.map((char) => { //Unshift characters into newStringArray to get correct order of numbers
