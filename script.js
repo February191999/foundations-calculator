@@ -14,8 +14,8 @@ displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: b
 
 function addNumbers(firstNum, secondNum) {
     
-    let firstNumToString = firstNum.toString();
-    let secondNumToString = secondNum.toString();
+    let firstNumToString = firstNum.toString(); //Store firstNum as string
+    let secondNumToString = secondNum.toString(); //Store secondNum as string
 
     console.log(firstNum);
     console.log(secondNum);
@@ -24,10 +24,10 @@ function addNumbers(firstNum, secondNum) {
     console.log(firstNumToString.includes("-"));
     console.log(secondNumToString.includes("-"));
 
-    if (firstNumToString.includes("-") === true && secondNumToString.includes("-") === true) {
+    if (firstNumToString.includes("-") === true && secondNumToString.includes("-") === true) { //Execute if both firstNumToString and secondNumToString have negative symbol
         console.log("here here");
         let secondNumToStringArray = secondNumToString.split("");
-        secondNumToStringArray.shift("-");
+        secondNumToStringArray.shift("-"); //Shift negative symbol of secondNum 
 
         console.log(secondNumToStringArray);
         console.log(typeof(secondNumToStringArray));
@@ -36,7 +36,7 @@ function addNumbers(firstNum, secondNum) {
 
         console.log(newSecondNum);
 
-        return firstNum - Number(newSecondNum);
+        return firstNum - Number(newSecondNum); //Subtract newSecondNum value from firstNum
     } else {
         console.log("here there");
         return firstNum + secondNum;
@@ -44,7 +44,26 @@ function addNumbers(firstNum, secondNum) {
 }
 
 function subtractNumbers(firstNum, secondNum) {
-    return firstNum - secondNum;
+    let firstNumToString = firstNum.toString(); //Store firstNum as string
+    let secondNumToString = secondNum.toString(); //Store secondNum as string
+
+    if (firstNumToString.includes("-") === true && secondNumToString.includes("-") === true) { //Execute if both firstNumToString and secondNumToString have negative symbol
+        console.log("here here");
+        let secondNumToStringArray = secondNumToString.split("");
+        secondNumToStringArray.shift("-"); //Shift negative symbol of secondNum
+
+        console.log(secondNumToStringArray);
+        console.log(typeof(secondNumToStringArray));
+
+        let newSecondNum = secondNumToStringArray.join("");
+
+        console.log(newSecondNum);
+
+        return firstNum + Number(newSecondNum); //Add firstNum and newSecondNum value
+    } else {
+        console.log("here there");
+        return firstNum - secondNum;
+    }
 }
 
 function multiplyNumbers(firstNum, secondNum) {
