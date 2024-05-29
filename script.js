@@ -13,7 +13,34 @@ displayDiv.setAttribute("style", "display: flex; justify-content: flex-end; alig
 displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; max-width: 100%; padding-right: 10px;");
 
 function addNumbers(firstNum, secondNum) {
-    return firstNum + secondNum;
+    
+    let firstNumToString = firstNum.toString();
+    let secondNumToString = secondNum.toString();
+
+    console.log(firstNum);
+    console.log(secondNum);
+    console.log(firstNumToString);
+    console.log(secondNumToString);
+    console.log(firstNumToString.includes("-"));
+    console.log(secondNumToString.includes("-"));
+
+    if (firstNumToString.includes("-") === true && secondNumToString.includes("-") === true) {
+        console.log("here here");
+        let secondNumToStringArray = secondNumToString.split("");
+        secondNumToStringArray.shift("-");
+
+        console.log(secondNumToStringArray);
+        console.log(typeof(secondNumToStringArray));
+
+        let newSecondNum = secondNumToStringArray.join("");
+
+        console.log(newSecondNum);
+
+        return firstNum - Number(newSecondNum);
+    } else {
+        console.log("here there");
+        return firstNum + secondNum;
+    }
 }
 
 function subtractNumbers(firstNum, secondNum) {
@@ -45,26 +72,30 @@ changeButton.addEventListener("click", () => {
         displayArray.unshift("-");
         console.log(displayValue);
         console.log(displayArray);
-    } else if (displayValue.indexOf("-") !== -1) { //If number is negative, unshift negative symbol
+    } else if (displayValue.indexOf("-") !== -1) { //If number is negative, shift negative symbol
         displayArray.shift();
         console.log(displayValue);
         console.log(displayArray);
     }
 
-    if (firstNumber === "") {
+    console.log(operator);
+    console.log(secondNumber);
+
+    if (operator !== "" && secondNumber !== "") {
+        console.log("here me me");
         displayValue = displayArray.join("");
+        firstNumber = displayValue;
         console.log(displayValue);
         console.log(`firstNumber is ${firstNumber}`);
         console.log(displayArray);
         displayPara.textContent = addComma(displayValue);
         displayDiv.appendChild(displayPara);
-    } else if (firstNumber !== "") {
-        firstNumber = displayArray.join("");
+    } else {
+        console.log("Me me");
         displayValue = displayArray.join("");
         console.log(displayValue);
-        console.log(displayArray);
         console.log(`firstNumber is ${firstNumber}`);
-
+        console.log(displayArray);
         displayPara.textContent = addComma(displayValue);
         displayDiv.appendChild(displayPara);
     }
@@ -72,20 +103,22 @@ changeButton.addEventListener("click", () => {
 
 operatorButtons.forEach(button => button.addEventListener("click", () => {
 
-    if (firstNumber !== "") {
+    if (firstNumber === "" || firstNumber === "-") {
+        console.log("Look at mee")
+        firstNumber = displayValue; //Store displayValue in firstNumber and change value type to number 
+        displayValue = ""; //Reset displayValue
+        displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
+        operator = button.value;
+        console.log(`firstNumber is ${firstNumber}`);
+    } else if (firstNumber !== "") {
+        console.log("I'm mister meeseeks")
         secondNumber = displayValue;//Store displayValue in secondNumber and change value type to number if firstNumber variable isn't empty
         displayValue = ""; //Reset displayValue
         displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
         operator = button.value;
         console.log(operator);
         console.log(`firstNumber is ${firstNumber}`);
-    } else if (firstNumber === "") {
-        firstNumber = displayValue; //Store displayValue in firstNumber and change value type to number 
-        displayValue = ""; //Reset displayValue
-        displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
-        operator = button.value;
-        console.log(`firstNumber is ${firstNumber}`);
-    }
+    } 
 }))
 
 operateButton.addEventListener("click", () => {
@@ -95,37 +128,12 @@ operateButton.addEventListener("click", () => {
 
     firstNumber = firstNumber.toString();
 
-    let firstNumberArray = firstNumber.split("");
-    let firstNumberDecimalIndex = firstNumberArray.indexOf("."); //Find index of decimal
+    console.log(firstNumber);
+    console.log(Number(firstNumber));
 
-    let secondNumberArray = secondNumber.split("");
-    let secondNumberDecimalIndex = secondNumberArray.indexOf("."); //Find index of decimal
-
-    if (firstNumberDecimalIndex === -1) {
-        console.log(`firstNum is ${firstNumber}`);
-        firstNumber = parseInt(firstNumber);
-        console.log(`firstNum is ${firstNumber}`);
-    } else if (firstNumber) {
-        console.log(`firstNum is ${firstNumber}`);
-        firstNumber = parseFloat(firstNumber);
-        console.log(`firstNum is ${firstNumber}`);
-    }
-
-    if (secondNumberDecimalIndex === -1) {
-        console.log(`secondNum is ${secondNumber}`);
-        secondNumber = parseInt(secondNumber);
-        console.log(`secondNum is ${secondNumber}`);
-    } else {
-        console.log(`secondNum is ${secondNumber}`);
-        secondNumber = parseFloat(secondNumber);
-        console.log(`secondNum is ${secondNumber}`);
-    }
-
-    displayValue = operate(firstNumber, secondNumber, operator); //Store operated value in displayValue
+    displayValue = operate(Number(firstNumber), Number(secondNumber), operator); //Store operated value in displayValue
 
     firstNumber = displayValue; //Store displayValue in firstNumber so users can use previous results in other operations
-
-    secondNumber = ""; //Reset secondNumber value to take in new number in anticipation of another operation with previous result
 
     let displayValueToString = displayValue.toString();
     let roundedDisplayValue = roundDisplayNumber(displayValueToString);
@@ -163,6 +171,7 @@ numbers.forEach(num => num.addEventListener("click", () => {
         displayDiv.appendChild(displayPara);
     } else {
         console.log("no3")
+        console.log(displayValue);
         displayPara.textContent = addComma(displayValue);
 
         displayDiv.appendChild(displayPara);
