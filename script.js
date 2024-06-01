@@ -167,6 +167,9 @@ operateButton.addEventListener("click", () => {
         displayPara.textContent = displayValue;
         displayDiv.appendChild(displayPara);
     }
+
+    secondNumber = ""; //Reset secondNumber
+    operator = ""; //Reset operator
 })
 
 numbers.forEach(num => num.addEventListener("click", () => {
@@ -194,6 +197,10 @@ numbers.forEach(num => num.addEventListener("click", () => {
         displayPara.textContent = addComma(displayValue);
 
         displayDiv.appendChild(displayPara);
+    }
+
+    if (firstNumber !== "" && secondNumber !== "" && operator !== "") {
+        displayValue   
     }
 }))
 
