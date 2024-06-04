@@ -90,6 +90,46 @@ window.addEventListener("keydown", (event) => {
         operator = "";
         displayDiv.removeChild(displayPara); 
         displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; max-width: 100%; padding-right: 10px;") //Reset displayPara style if cleared
+    } else if (event.key === "Enter") { //Operate if enter is pressed
+        console.log("I'm the one")
+        secondNumber = displayValue; //Store displayValue in secondNumber 
+        displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
+
+        console.log(event);
+        console.log(typeof(event.key));
+
+        firstNumber = firstNumber.toString();
+
+        console.log(firstNumber);
+        console.log(Number(firstNumber));
+
+        displayValue = operate(Number(firstNumber), Number(secondNumber), operator); //Store operated value in displayValue
+
+        firstNumber = displayValue; //Store displayValue in firstNumber so users can use previous results in other operations
+
+        console.log(displayValue);
+
+        let displayValueToString = displayValue.toString();
+        console.log(displayValueToString);
+        let roundedDisplayValue = roundDisplayNumber(displayValueToString);
+        console.log(roundedDisplayValue);
+
+        if (roundedDisplayValue === tooBigNum) { //If whole number is too big, returns a string to say so
+            displayPara.setAttribute("style", "display: flex; font-size: 3em; font-weight: bold; margin: 0; max-width: 100%; padding: 10px;"); 
+            displayValue = roundedDisplayValue;
+            displayPara.textContent = displayValue;
+            displayDiv.appendChild(displayPara);
+        } else {
+            console.log("I'm the you look for");
+            displayValue = addComma(roundedDisplayValue); 
+            displayPara.textContent = displayValue;
+            displayDiv.appendChild(displayPara);
+        }
+
+        secondNumber = ""; //Reset secondNumber
+        console.log(secondNumber);
+        operator = ""; //Reset operator
+        console.log(operator);
     } else if (event.key in numKeys) { //If key is a number execute code below
         displayValue += event.key; //Add event.key value to displayValue for each keyboard press
         console.log(event);
