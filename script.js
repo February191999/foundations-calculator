@@ -79,6 +79,46 @@ let secondNumber = "";
 let operator = "";
 let displayValue = "";
 const tooBigNum = "That number is too big!";
+const numKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+window.addEventListener("keydown", (event) => {
+
+    if (event.key === "Backspace") { //Resets calculator if backspace is pressed 
+        displayValue = ""; 
+        firstNumber = "";
+        secondNumber = "";
+        operator = "";
+        displayDiv.removeChild(displayPara); 
+        displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; max-width: 100%; padding-right: 10px;") //Reset displayPara style if cleared
+    } else if (event.key in numKeys) { //If key is a number execute code below
+        displayValue += event.key; //Add event.key value to displayValue for each keyboard press
+        console.log(event);
+        console.log(typeof(event.key));
+
+        let splitDisplayValue = displayValue.split(""); //Split string into array
+
+        let checkIfOverTen = isOverTen(splitDisplayValue); //Check if array length is over ten
+        
+        if (checkIfOverTen === true) { //Disable numbers buttons if over ten digits
+            numbers.ariaDisabled = "true";
+        } else if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
+            console.log("no1");
+            displayPara.textContent = displayValue;
+            displayDiv.appendChild(displayPara);
+        } else if (splitDisplayValue.includes(",") === false && splitDisplayValue.includes(".") === true) {
+            console.log("no2");
+            displayPara.textContent = addComma(displayValue);
+
+            displayDiv.appendChild(displayPara);
+        } else {
+            console.log("no3")
+            console.log(displayValue);
+            displayPara.textContent = addComma(displayValue);
+
+            displayDiv.appendChild(displayPara);
+        }
+    }
+})
 
 changeButton.addEventListener("click", () => {
 
@@ -97,6 +137,7 @@ changeButton.addEventListener("click", () => {
         console.log(displayArray);
     }
 
+    console.log(firstNumber);
     console.log(operator);
     console.log(secondNumber);
 
@@ -169,7 +210,9 @@ operateButton.addEventListener("click", () => {
     }
 
     secondNumber = ""; //Reset secondNumber
+    console.log(secondNumber);
     operator = ""; //Reset operator
+    console.log(operator);
 })
 
 numbers.forEach(num => num.addEventListener("click", () => {
