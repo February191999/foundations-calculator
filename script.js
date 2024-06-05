@@ -78,6 +78,7 @@ let firstNumber = "";
 let secondNumber = "";
 let operator = "";
 let displayValue = "";
+let computedValue = "";
 const tooBigNum = "That number is too big!";
 const numKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
@@ -251,6 +252,8 @@ operateButton.addEventListener("click", (event) => {
         displayDiv.appendChild(displayPara);
     }
 
+    computedValue = displayValue;
+    firstNumber = ""; //Reset firstNumber
     secondNumber = ""; //Reset secondNumber
     console.log(secondNumber);
     operator = ""; //Reset operator
