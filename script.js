@@ -83,14 +83,7 @@ const numKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 window.addEventListener("keydown", (event) => {
 
-    if (event.key === "Backspace") { //Resets calculator if backspace is pressed 
-        displayValue = ""; 
-        firstNumber = "";
-        secondNumber = "";
-        operator = "";
-        displayDiv.removeChild(displayPara); 
-        displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; max-width: 100%; padding-right: 10px;") //Reset displayPara style if cleared
-    } else if (event.key === "Enter") { //Operate if enter is pressed
+    if (event.key === "Enter") { //Operate if enter is pressed
         console.log("I'm the one")
         secondNumber = displayValue; //Store displayValue in secondNumber 
         displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
@@ -130,6 +123,13 @@ window.addEventListener("keydown", (event) => {
         console.log(secondNumber);
         operator = ""; //Reset operator
         console.log(operator);
+    } else if (event.key === "Backspace") { //Resets calculator if backspace is pressed 
+        displayValue = ""; 
+        firstNumber = "";
+        secondNumber = "";
+        operator = "";
+        displayDiv.removeChild(displayPara); 
+        displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; max-width: 100%; padding-right: 10px;") //Reset displayPara style if cleared
     } else if (event.key in numKeys) { //If key is a number execute code below
         displayValue += event.key; //Add event.key value to displayValue for each keyboard press
         console.log(event);
@@ -201,8 +201,7 @@ changeButton.addEventListener("click", () => {
     }
 })
 
-operatorButtons.forEach(button => button.addEventListener("click", () => {
-
+operatorButtons.forEach(button => button.addEventListener("click", (event) => {
     if (firstNumber === "" || firstNumber === "-") {
         console.log("Look at mee")
         firstNumber = displayValue; //Store displayValue in firstNumber and change value type to number 
@@ -210,6 +209,7 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
         displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
         operator = button.value;
         console.log(`firstNumber is ${firstNumber}`);
+        event.currentTarget.blur(); //Unfocus button after click
     } else if (firstNumber !== "") {
         console.log("I'm mister meeseeks")
         secondNumber = displayValue;//Store displayValue in secondNumber and change value type to number if firstNumber variable isn't empty
@@ -218,6 +218,7 @@ operatorButtons.forEach(button => button.addEventListener("click", () => {
         operator = button.value;
         console.log(operator);
         console.log(`firstNumber is ${firstNumber}`);
+        event.currentTarget.blur(); //Unfocus button after click
     } 
 }))
 
