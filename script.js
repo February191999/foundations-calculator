@@ -328,7 +328,12 @@ decimal.addEventListener("click", (event) => {
     if (checkIfOverTen === true) { //Disable decimal button if displayValue is equal or over ten digits
         decimal.ariaDisabled = "true";
     } else {
-        if (checkDecimal === undefined) { //If checkDecimal returns undefined, decimal button works
+        if (checkDecimal === undefined && displayValue === "") { //If dislayValue is empty, add 0 and decimal point
+            displayValue = "0.";
+            displayPara.textContent = displayValue;
+
+            displayDiv.appendChild(displayPara);
+        } else if (checkDecimal === undefined) { //If checkDecimal returns undefined, decimal button works
         decimal.ariaDisabled = "false"; 
         let displayValueWithComma = addComma(displayValue);
 
