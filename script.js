@@ -160,7 +160,7 @@ window.addEventListener("keydown", (event) => {
     }
 })
 
-changeButton.addEventListener("click", () => {
+changeButton.addEventListener("click", (event) => {
 
     let displayArray = displayValue.split(""); //Split displayValue
 
@@ -199,6 +199,7 @@ changeButton.addEventListener("click", () => {
         displayPara.textContent = addComma(displayValue);
         displayDiv.appendChild(displayPara);
     }
+    event.currentTarget.blur(); //Unfocus button after click
 })
 
 operatorButtons.forEach(button => button.addEventListener("click", (event) => {
@@ -222,7 +223,7 @@ operatorButtons.forEach(button => button.addEventListener("click", (event) => {
     } 
 }))
 
-operateButton.addEventListener("click", () => {
+operateButton.addEventListener("click", (event) => {
     
     secondNumber = displayValue; //Store displayValue in secondNumber 
     displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
@@ -254,9 +255,10 @@ operateButton.addEventListener("click", () => {
     console.log(secondNumber);
     operator = ""; //Reset operator
     console.log(operator);
+    event.currentTarget.blur(); //Unfocus button after click
 })
 
-numbers.forEach(num => num.addEventListener("click", () => {
+numbers.forEach(num => num.addEventListener("click", (event) => {
 
     displayValue += num.value; //Add num value to displayValue for each click on buttons with number class
 
@@ -286,6 +288,7 @@ numbers.forEach(num => num.addEventListener("click", () => {
     if (firstNumber !== "" && secondNumber !== "" && operator !== "") {
         displayValue   
     }
+    event.currentTarget.blur(); //Unfocus button after click
 }))
 
 function isOverTen(array) {
@@ -299,13 +302,14 @@ function isOverTen(array) {
     }
 }
 
-clear.addEventListener("click", () => {
+clear.addEventListener("click", (event) => {
     displayValue = ""; //Resets displayValue
     firstNumber = "";
     secondNumber = "";
     operator = "";
     displayDiv.removeChild(displayPara); 
     displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; max-width: 100%; padding-right: 10px;") //Reset displayPara style if cleared
+    event.currentTarget.blur(); //Unfocus button after click
 })
 
 function isDecimal(item) {
@@ -314,7 +318,7 @@ function isDecimal(item) {
     }
 }
 
-decimal.addEventListener("click", () => {
+decimal.addEventListener("click", (event) => {
      
     let splitDisplayValue = displayValue.split(""); //Split string into array
     let checkDecimal = splitDisplayValue.find(isDecimal); //Check if array has a period
@@ -337,9 +341,10 @@ decimal.addEventListener("click", () => {
         decimal.ariaDisabled = "true"; //Disable decimal button if checkDecimal finds a period
         }
     }
+    event.currentTarget.blur(); //Unfocus button after click
 })
 
-del.addEventListener("click", () => {
+del.addEventListener("click", (event) => {
 
     let splitDisplayValue = displayValue.split(""); //Split string into array
     let checkIfOverTen = isOverTen(splitDisplayValue);
@@ -357,6 +362,7 @@ del.addEventListener("click", () => {
     displayPara.textContent = addComma(displayValue);
 
     displayDiv.appendChild(displayPara);
+    event.currentTarget.blur(); //Unfocus button after click
 })
 
 function addComma(string) {
