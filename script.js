@@ -184,7 +184,6 @@ operateButton.addEventListener("click", (event) => {
         displayDiv.appendChild(displayPara);
     }
 
-    computedValue = displayValue; //Store final value in computedValue variable
     firstNumber = ""; //Reset firstNumber
     secondNumber = ""; //Reset secondNumber
     operator = ""; //Reset operator
