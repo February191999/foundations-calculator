@@ -204,16 +204,9 @@ numbers.forEach(num => num.addEventListener("click", (event) => {
     } else if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
         displayPara.textContent = displayValue;
         displayDiv.appendChild(displayPara);
-    } else if (splitDisplayValue.includes(",") === false && splitDisplayValue.includes(".") === true) {
-        displayPara.textContent = addComma(displayValue);
-        displayDiv.appendChild(displayPara);
     } else {
         displayPara.textContent = addComma(displayValue);
         displayDiv.appendChild(displayPara);
-    }
-
-    if (firstNumber !== "" && secondNumber !== "" && operator !== "") {
-        displayValue   
     }
     event.currentTarget.blur(); //Unfocus button after click
 }))
