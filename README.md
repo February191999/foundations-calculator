@@ -12,4 +12,6 @@ The calculator also has a button to turn the number negative or positive, by shi
 
 To improve visibility, an addComma function is also used to place commas in the different parts of the display value. The addComma function uses a series of if and else conditions to decide how it should deal with different number cases such as whole numbers over thousand, single digit numbers with decimals or whole number with decimals. What's more, there's also a roundDisplayNumber function to round the number if it's over nine digits by using toFixed and toPrecision to deal with decimal numbers. 
 
-JavaScript's DOM manipulation is also used to target the window object to add keyboard support to the calculator. The event listener listens for keydown events and and adds the key value to the display value if the typed key is a number. An if/else condition is used to clear the calculator if a backspace key is pressed or to operate if the enter key is pressed.
+JavaScript's DOM manipulation is also used to target the window object to add keyboard support to the calculator. The event listener listens for keydown events and and adds the key value to the display value if the typed key is a number. An if/else condition is used to clear the calculator if a backspace key is pressed or to operate if the enter key is pressed. 
+
+Every button has an "event.curentTarget.blur()" line to deal with unwanted focus on the button after it is clicked. This prevents problems that occur with the keyboard events when the enter button is involved.
