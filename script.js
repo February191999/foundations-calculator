@@ -182,7 +182,7 @@ changeButton.addEventListener("click", (event) => {
     console.log(operator);
     console.log(secondNumber);
 
-    if (operator !== "" && secondNumber !== "") {
+    if (operator === "" && secondNumber === "") { //If operator and secondNumber is empty execute code below
         console.log("here me me");
         displayValue = displayArray.join("");
         firstNumber = displayValue;
@@ -252,7 +252,7 @@ operateButton.addEventListener("click", (event) => {
         displayDiv.appendChild(displayPara);
     }
 
-    computedValue = displayValue;
+    computedValue = displayValue; //Store final value in computedValue variable
     firstNumber = ""; //Reset firstNumber
     secondNumber = ""; //Reset secondNumber
     console.log(secondNumber);
