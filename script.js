@@ -105,16 +105,13 @@ window.addEventListener("keydown", (event) => {
         if (checkIfOverTen === true) { //Disable numbers buttons if over ten digits
             numbers.ariaDisabled = "true";
         } else if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
-            console.log("no1");
             displayPara.textContent = displayValue;
             displayDiv.appendChild(displayPara);
         } else if (splitDisplayValue.includes(",") === false && splitDisplayValue.includes(".") === true) {
-            console.log("no2");
             displayPara.textContent = addComma(displayValue);
 
             displayDiv.appendChild(displayPara);
         } else {
-            console.log("no3")
             console.log(displayValue);
             displayPara.textContent = addComma(displayValue);
 
@@ -127,38 +124,19 @@ changeButton.addEventListener("click", (event) => {
 
     let displayArray = displayValue.split(""); //Split displayValue
 
-    console.log(displayValue);
-    console.log(displayArray);
-
     if (displayValue.indexOf("-") === -1) { //If number isn't negative, unshift negative symbol
         displayArray.unshift("-");
-        console.log(displayValue);
-        console.log(displayArray);
     } else if (displayValue.indexOf("-") !== -1) { //If number is negative, shift negative symbol
         displayArray.shift();
-        console.log(displayValue);
-        console.log(displayArray);
     }
 
-    console.log(firstNumber);
-    console.log(operator);
-    console.log(secondNumber);
-
     if (operator === "" && secondNumber === "") { //If operator and secondNumber is empty execute code below
-        console.log("here me me");
         displayValue = displayArray.join("");
         firstNumber = displayValue;
-        console.log(displayValue);
-        console.log(`firstNumber is ${firstNumber}`);
-        console.log(displayArray);
         displayPara.textContent = addComma(displayValue);
         displayDiv.appendChild(displayPara);
     } else {
-        console.log("Me me");
         displayValue = displayArray.join("");
-        console.log(displayValue);
-        console.log(`firstNumber is ${firstNumber}`);
-        console.log(displayArray);
         displayPara.textContent = addComma(displayValue);
         displayDiv.appendChild(displayPara);
     }
@@ -167,21 +145,16 @@ changeButton.addEventListener("click", (event) => {
 
 operatorButtons.forEach(button => button.addEventListener("click", (event) => {
     if (firstNumber === "" || firstNumber === "-") {
-        console.log("Look at mee")
         firstNumber = displayValue; //Store displayValue in firstNumber and change value type to number 
         displayValue = ""; //Reset displayValue
         displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
         operator = button.value;
-        console.log(`firstNumber is ${firstNumber}`);
         event.currentTarget.blur(); //Unfocus button after click
     } else if (firstNumber !== "") {
-        console.log("I'm mister meeseeks")
         secondNumber = displayValue;//Store displayValue in secondNumber and change value type to number if firstNumber variable isn't empty
         displayValue = ""; //Reset displayValue
         displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
         operator = button.value;
-        console.log(operator);
-        console.log(`firstNumber is ${firstNumber}`);
         event.currentTarget.blur(); //Unfocus button after click
     } 
 }))
@@ -192,9 +165,6 @@ operateButton.addEventListener("click", (event) => {
     displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
 
     firstNumber = firstNumber.toString();
-
-    console.log(firstNumber);
-    console.log(Number(firstNumber));
 
     displayValue = operate(Number(firstNumber), Number(secondNumber), operator); //Store operated value in displayValue
 
@@ -217,9 +187,7 @@ operateButton.addEventListener("click", (event) => {
     computedValue = displayValue; //Store final value in computedValue variable
     firstNumber = ""; //Reset firstNumber
     secondNumber = ""; //Reset secondNumber
-    console.log(secondNumber);
     operator = ""; //Reset operator
-    console.log(operator);
     event.currentTarget.blur(); //Unfocus button after click
 })
 
@@ -234,19 +202,13 @@ numbers.forEach(num => num.addEventListener("click", (event) => {
     if (checkIfOverTen === true) { //Disable numbers buttons if over ten digits
         numbers.ariaDisabled = "true";
     } else if (splitDisplayValue.includes(",") === true) { //Return displayValue without adding comma if splitDiplayValue contains comma
-        console.log("no1");
         displayPara.textContent = displayValue;
         displayDiv.appendChild(displayPara);
     } else if (splitDisplayValue.includes(",") === false && splitDisplayValue.includes(".") === true) {
-        console.log("no2");
         displayPara.textContent = addComma(displayValue);
-
         displayDiv.appendChild(displayPara);
     } else {
-        console.log("no3")
-        console.log(displayValue);
         displayPara.textContent = addComma(displayValue);
-
         displayDiv.appendChild(displayPara);
     }
 
@@ -321,7 +283,6 @@ del.addEventListener("click", (event) => {
 
     if (checkIfOverTen === true) {
         splitDisplayValue.splice(8); //Delete any item after index eight if array length is more than 10
-        console.log(splitDisplayValue);
     } else {
         splitDisplayValue.splice(-1, 1); //Delete last item
     }
