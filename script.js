@@ -17,28 +17,14 @@ function addNumbers(firstNum, secondNum) {
     let firstNumToString = firstNum.toString(); //Store firstNum as string
     let secondNumToString = secondNum.toString(); //Store secondNum as string
 
-    console.log(firstNum);
-    console.log(secondNum);
-    console.log(firstNumToString);
-    console.log(secondNumToString);
-    console.log(firstNumToString.includes("-"));
-    console.log(secondNumToString.includes("-"));
-
     if (firstNumToString.includes("-") === true && secondNumToString.includes("-") === true) { //Execute if both firstNumToString and secondNumToString have negative symbol
-        console.log("here here");
         let secondNumToStringArray = secondNumToString.split("");
         secondNumToStringArray.shift("-"); //Shift negative symbol of secondNum 
 
-        console.log(secondNumToStringArray);
-        console.log(typeof(secondNumToStringArray));
-
         let newSecondNum = secondNumToStringArray.join("");
-
-        console.log(newSecondNum);
 
         return firstNum - Number(newSecondNum); //Subtract newSecondNum value from firstNum
     } else {
-        console.log("here there");
         return firstNum + secondNum;
     }
 }
@@ -48,20 +34,13 @@ function subtractNumbers(firstNum, secondNum) {
     let secondNumToString = secondNum.toString(); //Store secondNum as string
 
     if (firstNumToString.includes("-") === true && secondNumToString.includes("-") === true) { //Execute if both firstNumToString and secondNumToString have negative symbol
-        console.log("here here");
         let secondNumToStringArray = secondNumToString.split("");
         secondNumToStringArray.shift("-"); //Shift negative symbol of secondNum
 
-        console.log(secondNumToStringArray);
-        console.log(typeof(secondNumToStringArray));
-
         let newSecondNum = secondNumToStringArray.join("");
-
-        console.log(newSecondNum);
 
         return firstNum + Number(newSecondNum); //Add firstNum and newSecondNum value
     } else {
-        console.log("here there");
         return firstNum - secondNum;
     }
 }
@@ -78,35 +57,23 @@ let firstNumber = "";
 let secondNumber = "";
 let operator = "";
 let displayValue = "";
-let computedValue = "";
 const tooBigNum = "That number is too big!";
 const numKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 window.addEventListener("keydown", (event) => {
 
     if (event.key === "Enter") { //Operate if enter is pressed
-        console.log("I'm the one")
         secondNumber = displayValue; //Store displayValue in secondNumber 
         displayDiv.removeChild(displayPara); //Remove displayPara for users to enter new number
 
-        console.log(event);
-        console.log(typeof(event.key));
-
         firstNumber = firstNumber.toString();
-
-        console.log(firstNumber);
-        console.log(Number(firstNumber));
 
         displayValue = operate(Number(firstNumber), Number(secondNumber), operator); //Store operated value in displayValue
 
         firstNumber = displayValue; //Store displayValue in firstNumber so users can use previous results in other operations
 
-        console.log(displayValue);
-
         let displayValueToString = displayValue.toString();
-        console.log(displayValueToString);
         let roundedDisplayValue = roundDisplayNumber(displayValueToString);
-        console.log(roundedDisplayValue);
 
         if (roundedDisplayValue === tooBigNum) { //If whole number is too big, returns a string to say so
             displayPara.setAttribute("style", "display: flex; font-size: 3em; font-weight: bold; margin: 0; max-width: 100%; padding: 10px;"); 
@@ -114,16 +81,13 @@ window.addEventListener("keydown", (event) => {
             displayPara.textContent = displayValue;
             displayDiv.appendChild(displayPara);
         } else {
-            console.log("I'm the you look for");
             displayValue = addComma(roundedDisplayValue); 
             displayPara.textContent = displayValue;
             displayDiv.appendChild(displayPara);
         }
 
         secondNumber = ""; //Reset secondNumber
-        console.log(secondNumber);
         operator = ""; //Reset operator
-        console.log(operator);
     } else if (event.key === "Backspace") { //Resets calculator if backspace is pressed 
         displayValue = ""; 
         firstNumber = "";
@@ -133,8 +97,6 @@ window.addEventListener("keydown", (event) => {
         displayPara.setAttribute("style", "display: flex; font-size: 5em; font-weight: bold; margin: 0; max-width: 100%; padding-right: 10px;") //Reset displayPara style if cleared
     } else if (event.key in numKeys) { //If key is a number execute code below
         displayValue += event.key; //Add event.key value to displayValue for each keyboard press
-        console.log(event);
-        console.log(typeof(event.key));
 
         let splitDisplayValue = displayValue.split(""); //Split string into array
 
